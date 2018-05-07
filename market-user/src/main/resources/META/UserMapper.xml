@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.market.user.mapper.UserMapper">
+	
+	<select id="queryByPhone" parameterType="java.lang.String" resultType="com.market.bean.UserBean">
+	
+	</select>
+	
+	<select id="queryById" parameterType="java.lang.String" resultType="com.market.domain.UserInfo">
+	
+	</select>
+	
+</mapper>

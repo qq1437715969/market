@@ -1,0 +1,45 @@
+
+server:
+  port: 8888
+  tomcat:
+    uri-encoding: UTF-8
+    
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/market?characterEncoding=utf8&useSSL=true&allowMultiQueries=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    initialSize: 5    # 初始化连接数
+    minIdle: 5        # 最小空闲连接数
+    maxActive: 50     # 最大活动连接数
+    maxWait: 60000    # 获取连接等待超时的时间，单位毫秒
+    timeBetweenEvictionRunsMillis: 60000  # 间隔60秒进行一次检测，检测需要关闭的空闲连接，单位毫秒
+    minEvictableIdleTimeMillis: 300000    # 池中连接最小生存的时间300秒，单位是毫秒
+    validationQuery: SELECT 2 FROM DUAL   # 检测连接使用的SQL
+    testWhileIdle: true                   # 连接是否被空闲连接回收器进行检验,如果检测失败,则连接将被从池中去除
+    testOnBorrow: false                   # 从池中取出连接前进行检验
+    testOnReturn: false                   # 归还连接到池中前进行检验
+    filters: config,stat,wall,log4j
+    useGlobalDataSourceStat: true
+    connectionProperties: config.decrypt=false
+
+    
+  jackson:
+    default-property-inclusion: non-null
+  
+  redis:
+    host: localhost
+    port: 6379
+    database: 8
+  
+  http:
+    multipart:
+      enabled: true
+      max-file-size: 5MB
+      max-request-size: 10MB
+
+      
+#mybatis:
+#   mapperLocations: classpath:mapper/*.xml

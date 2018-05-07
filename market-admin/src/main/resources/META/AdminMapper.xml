@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.market.admin.mapper.AdminMapper">
+	
+	<resultMap type="com.market.bean.Admin" id="BaseAdminMap">
+		<id column="admin_id" property="adminId"/>
+		<result column="admin_name" property="adminName"/>
+		<result column="pass" property="pass"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+		<result column="status" property="status"/>
+		<result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<resultMap type="com.market.bean.Menu" id="BaseMenuMap">
+		<id column="menu_id" property="menuId" />
+		<result column="menu_name" property="menuName"/>
+		<result column="menu_type" property="menuType"/>
+		<result column="parent_id" property="parentId"/>
+		<result column="url" property="url"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<select id="getMenuByRoleId" parameterType="java.lang.String" resultMap="BaseMenuMap">
+		select distinct(t.menu_id) , t.menu_name ,menu_type, parent_id , url , count_num , create_time , modify_time  from tb_admin_menu t join tb_admin_role_menu_rel rel join tb_admin_role role on rel.role_id = role.role_id where rel.role_id = #{roleId} order by count_num
+	</select>
+	
+	<select id="getMenuByRoleIds" parameterType="java.lang.String" resultMap="BaseMenuMap">
+		select distinct(t.menu_id) , t.menu_name ,menu_type, parent_id , url , count_num , create_time , modify_time  from tb_admin_menu t join tb_admin_role_menu_rel rel join tb_admin_role role on rel.role_id = role.role_id where rel.role_id in #{roleIds} order by count_num	
+	</select>
+	
+	<select id="getRolesById" parameterType="java.lang.String" resultType="java.lang.String">
+		select Group_concat(distinct(role_id)) roleIds from tb_admin_role_rel where admin_id = #{adminId}
+	</select>
+	
+</mapper>
