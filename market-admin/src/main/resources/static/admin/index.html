@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/zTree/css/demo.css" type="text/css">
+<link rel="stylesheet" href="/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="/zTree/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/zTree/js/jquery.ztree.all.min.js"></script>
+</head>
+<body>
+	<ul id="menuTree" class="ztree"></ul>
+</body>
+<script type="text/javascript">
+var zTreeObj;
+// zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+
+// zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
+var setting = {
+	treeId : "menuTree",
+	async: {
+		enable: true,
+		url: "/admin/listAllMenus.do",
+		autoParam: ["id", "name"]
+	},
+	data: {
+		keep: {
+			leaf: true,
+			parent: true
+		},
+		key: {
+			checked: "isChecked",
+			title: "menuName",
+			name: 'menuName',
+			isParent: 'isParent'
+		}
+	},
+	check: {
+		enable: true
+	}
+};
+
+/* var zNodes = [
+{name:"test1", open:true, children:[
+   {name:"test1_1"}, {name:"test1_2"}]},
+{name:"test2", open:true, children:[
+   {name:"test2_1"}, {name:"test2_2"}]}
+]; */
+$(document).ready(function(){
+   zTreeObj = $.fn.zTree.init($("#menuTree"), setting);
+});
+</script>
+</html>

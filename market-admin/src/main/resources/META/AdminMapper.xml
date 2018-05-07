@@ -24,11 +24,15 @@
 	</resultMap>
 	
 	<select id="getMenuByRoleId" parameterType="java.lang.String" resultMap="BaseMenuMap">
-		select distinct(t.menu_id) , t.menu_name ,menu_type, parent_id , url , count_num , create_time , modify_time  from tb_admin_menu t join tb_admin_role_menu_rel rel join tb_admin_role role on rel.role_id = role.role_id where rel.role_id = #{roleId} order by count_num
+		select t.menu_id,m.menu_name,m.menu_type,m.parent_id,m.url,m.count_num , m.create_time , m.modify_time  from (
+		select rel.menu_id from tb_admin_role_menu_rel rel where rel.role_id = #{roleId}
+		) t join tb_admin_menu m on t.menu_id = m.menu_id order by m.count_num 
 	</select>
 	
 	<select id="getMenuByRoleIds" parameterType="java.lang.String" resultMap="BaseMenuMap">
-		select distinct(t.menu_id) , t.menu_name ,menu_type, parent_id , url , count_num , create_time , modify_time  from tb_admin_menu t join tb_admin_role_menu_rel rel join tb_admin_role role on rel.role_id = role.role_id where rel.role_id in #{roleIds} order by count_num	
+		select t.menu_id,m.menu_name,m.menu_type,m.parent_id,m.url,m.count_num , m.create_time , m.modify_time  from (
+		select rel.menu_id from tb_admin_role_menu_rel rel where rel.role_id in #{roleIds}
+		) t join tb_admin_menu m on t.menu_id = m.menu_id order by m.count_num 
 	</select>
 	
 	<select id="getRolesById" parameterType="java.lang.String" resultType="java.lang.String">

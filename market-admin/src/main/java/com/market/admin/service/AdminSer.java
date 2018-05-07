@@ -4,7 +4,10 @@ import java.util.List;
 
 import com.market.bean.Admin;
 import com.market.bean.Menu;
+import com.market.domain.CommonRsp;
 import com.market.domain.MenuTree;
+import com.market.dto.AdminLoginDto;
+import com.market.dto.SubAdminRegistDto;
 
 public interface AdminSer {
 	
@@ -17,5 +20,11 @@ public interface AdminSer {
 	List<Menu> getMenusById(String adminId);
 	
 	MenuTree getMenuTreeById(String adminId);
+
+	List<MenuTree> getAllMenus();
+
+	CommonRsp<AdminLoginDto> login(String adminId, String pass);
+
+	CommonRsp<SubAdminRegistDto> createSubAdmin(String subAdmin, String pass);
 	
 }

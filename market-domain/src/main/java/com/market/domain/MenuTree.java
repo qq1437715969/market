@@ -2,6 +2,8 @@ package com.market.domain;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class MenuTree {
 
 	private String menuId;
@@ -11,6 +13,8 @@ public class MenuTree {
 	private String menuName;
 	
 	private String menuType;
+	
+	private String isParent;
 	
 	private List<MenuTree> children;
 
@@ -47,11 +51,27 @@ public class MenuTree {
 	}
 
 	public List<MenuTree> getChildren() {
-		return children;
+		if("O".equals(this.menuType)) {
+			return null;
+		}else {
+			return children;
+		}
 	}
 
 	public void setChildren(List<MenuTree> children) {
 		this.children = children;
+	}
+
+	public String getIsParent() {
+		if("M".equals(this.menuType)) {
+			return "isParent";
+		}else {
+			return "";
+		}
+	}
+
+	public void setIsParent(String isParent) {
+		this.isParent = isParent;
 	}
 	
 }

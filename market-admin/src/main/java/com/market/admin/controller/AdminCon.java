@@ -14,6 +14,7 @@ import com.market.bean.Menu;
 import com.market.domain.CodeDict;
 import com.market.domain.CommonRsp;
 import com.market.domain.MenuTree;
+import com.market.dto.SubAdminRegistDto;
 import com.market.utils.CheckUtil;
 
 @RestController
@@ -24,8 +25,8 @@ public class AdminCon extends BaseCon {
 	@Autowired
 	private AdminSer adminService;
 	
-	@RequestMapping("/{adminId}")
-	public CommonRsp<Admin> queryById(@PathVariable("adminId")String adminId) {
+	@RequestMapping("/queryById.do")
+	public CommonRsp<Admin> queryById(String adminId) {
 		CommonRsp<Admin> rsp = new CommonRsp<Admin>();
 		rsp.setCode(CodeDict.FAILED.getCode());
 		if(CheckUtil.isBlank(adminId)) {
@@ -69,6 +70,26 @@ public class AdminCon extends BaseCon {
 			return null;
 		}
 		return menuTree.getChildren();
+	}
+	
+	@RequestMapping("/listAllMenus.do")
+	public List<MenuTree> listAllMenus(){
+		List<MenuTree> menus = adminService.getAllMenus();
+		if(null==menus||menus.size()==0) {
+			return null;
+		}
+		return menus;
+	}
+	
+	@RequestMapping("/createSubAdmin.do")
+	public CommonRsp<SubAdminRegistDto> createSubAdmin(String subAdmin,String pass) {
+		CommonRsp<SubAdminRegistDto> rsp = new CommonRsp<SubAdminRegistDto>();
+		rsp.setCode(CodeDict.FAILED.getCode());
+		if(CheckUtil.isBlank(subAdmin)||subAdmin.length()<5||subAdmin.length()>15) {
+			rsp.setMsg("管理员名称不合法");
+			return rsp;
+		}
+		return adminService.createSubAdmin(subAdmin,pass);
 	}
 	
 }

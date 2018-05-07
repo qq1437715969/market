@@ -2,8 +2,10 @@ package com.market.bean;
 
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotations.TableName;
 import com.market.domain.BaseBean;
 
+@TableName("tb_admin")
 public class Admin extends BaseBean{
 	
 	private String adminId;
