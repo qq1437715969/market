@@ -5,10 +5,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.market.admin.controller.AdminCon;
 import com.market.admin.mapper.AdminMapper;
 import com.market.admin.mapper.AdminRoleRelMapper;
@@ -241,6 +243,21 @@ public class AdminService implements AdminSer {
 		response.setCode(CodeDict.SUCCESS.getCode());
 		response.setMsg("管理员删除成功");
 		return response;
+	}
+	
+	@Override
+	public CommonRsp<List<Admin>> querySubAdmin() {
+		CommonRsp<List<Admin>> rsp = new CommonRsp<List<Admin>>();
+		rsp.setCode(CodeDict.FAILED.getCode());
+		List<Admin> list = adminMapper.selectAll();
+		if(null==list||list.size()==0) {
+			rsp.setMsg("未查询到任何数据");
+			return rsp;
+		}
+		rsp.setCode(CodeDict.SUCCESS.getCode());
+		rsp.setCode("查询完成");
+		rsp.setData(list);
+		return rsp;
 	}
 
 	/**

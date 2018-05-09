@@ -108,4 +108,9 @@ public class AdminCon extends BaseCon {
 		return adminService.remove(adminId);
 	}
 	
+	@RequestMapping("/querySubAdminBaseInfo.do")
+	public CommonRsp<List<Admin>> querySubAdminBaseInfo(){
+		 return adminService.querySubAdmin();
+	}
+	
 }
