@@ -32,4 +32,9 @@ public interface AdminMapper extends BaseMapper<Admin>  {
 	@Update("update tb_admin set last_login_time = #{loginTime,jdbcType=TIMESTAMP} where admin_id = #{adminId}")
 	Integer updateLoginTime(AdminLoginDto loginDto);
 
+	
+	@Select("select admin_id , admin_name , pass , create_time , modify_time , status , last_login_time from tb_admin")
+	@ResultMap("BaseAdminMap")
+	List<Admin> selectAll();
+
 }

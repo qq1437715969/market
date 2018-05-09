@@ -29,4 +29,6 @@ public interface AdminSer {
 	CommonRsp<SubAdminRegistDto> createSubAdmin(String subAdmin, String pass);
 	
 	Response remove(String adminId);
+	
+	CommonRsp<List<Admin>> querySubAdmin();
 }
