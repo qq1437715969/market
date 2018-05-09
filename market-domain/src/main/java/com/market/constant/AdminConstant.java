@@ -15,6 +15,10 @@ public class AdminConstant {
 	
 	public static final String APPID = "appid";
 	
+	public static final String ADMIN_ONLINE_PRE = "OnLineAdmin_";
+	
+	public static final String ONLINE_APPID_PRE = "OnLineAppId_";
+	
 	static {
 		CAN_NOT_REMOVE_ADMINIDS.add("admin");
 //		CAN_NOT_REMOVE_ADMINIDS.add("subAdmin");

@@ -19,6 +19,7 @@ import com.market.bean.AdminRoleRel;
 import com.market.bean.Menu;
 import com.market.constant.AdminConstant;
 import com.market.constant.AdminStatusConstant;
+import com.market.core.config.CacheClient;
 import com.market.domain.CodeDict;
 import com.market.domain.CommonRsp;
 import com.market.domain.MenuTree;
@@ -35,6 +36,9 @@ public class AdminService implements AdminSer {
 	
 	@Autowired
 	private AdminMapper adminMapper;
+	
+	@Autowired
+	private CacheClient client;
 	
 	@Autowired
 	private AdminRoleRelMapper adminRoleRelMapper;
@@ -174,10 +178,11 @@ public class AdminService implements AdminSer {
 		String token = TokenUtils.createToken(appId, random);
 		loginBean.setAccessToken(token);
 		loginDto.setAccessToken(token);
+		client.set(AdminConstant.ONLINE_APPID_PRE+appId,loginBean.getAdminId());
+		client.set(AdminConstant.ADMIN_ONLINE_PRE+loginBean.getAdminId(),loginBean);
 		rsp.setCode(CodeDict.SUCCESS.getCode());
 		rsp.setMsg("登陆成功");
 		rsp.setData(loginDto);
-		
 		return rsp;
 	}
 
