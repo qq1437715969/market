@@ -33,13 +33,18 @@ spring:
     host: localhost
     port: 6379
     database: 8
-  
+    timeout: 0
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+      
+      
   http:
     multipart:
       enabled: true
       max-file-size: 5MB
       max-request-size: 10MB
 
-      
-#mybatis:
-#   mapperLocations: classpath:mapper/*.xml
+
