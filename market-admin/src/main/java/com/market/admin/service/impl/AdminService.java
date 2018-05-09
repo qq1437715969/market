@@ -3,6 +3,7 @@ package com.market.admin.service.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import com.market.admin.mapper.AdminMapper;
 import com.market.admin.mapper.AdminRoleRelMapper;
 import com.market.admin.service.AdminSer;
 import com.market.bean.Admin;
+import com.market.bean.AdminLoginBean;
 import com.market.bean.AdminRoleRel;
 import com.market.bean.Menu;
 import com.market.constant.AdminConstant;
@@ -25,11 +27,12 @@ import com.market.dto.AdminLoginDto;
 import com.market.dto.SubAdminRegistDto;
 import com.market.exception.AdminException;
 import com.market.utils.CheckUtil;
+import com.market.utils.TokenUtils;
 
 
 @Service("adminService")
 public class AdminService implements AdminSer {
-
+	
 	@Autowired
 	private AdminMapper adminMapper;
 	
@@ -150,13 +153,31 @@ public class AdminService implements AdminSer {
 		loginDto.setAdminId(adminId);
 		loginDto.setAdminName(admin.getAdminName());
 		loginDto.setLastLoginTime(admin.getLastLoginTime());
-		rsp.setCode(CodeDict.SUCCESS.getCode());
-		rsp.setMsg("登陆成功");
-		rsp.setData(loginDto);
-		Integer update = adminMapper.updateLoginTime(adminId);
+		loginDto.setLoginTime(new Date());
+		
+		Integer update = adminMapper.updateLoginTime(loginDto);
 		if(update!=1) {
 			throw new AdminException("登陆失败，请联系管理员");
 		}
+		
+		Map<String, String> map = TokenUtils.createAppId(adminId, loginDto.getLoginTime(), null);
+		String appId = map.get(AdminConstant.APPID);
+		String random = map.get(AdminConstant.RANDOM);
+		loginDto.setAppId(appId);
+		AdminLoginBean loginBean = new AdminLoginBean();
+		loginBean.setAdminId(adminId);
+		loginBean.setAdminName(admin.getAdminName());
+		loginBean.setAppId(appId);
+		loginBean.setLastLoginTime(admin.getLastLoginTime());
+		loginBean.setLoginTime(loginDto.getLoginTime());
+		loginBean.setRandom(random);
+		String token = TokenUtils.createToken(appId, random);
+		loginBean.setAccessToken(token);
+		loginDto.setAccessToken(token);
+		rsp.setCode(CodeDict.SUCCESS.getCode());
+		rsp.setMsg("登陆成功");
+		rsp.setData(loginDto);
+		
 		return rsp;
 	}
 

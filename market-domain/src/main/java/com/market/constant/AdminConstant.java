@@ -11,6 +11,10 @@ public class AdminConstant {
 	
 	public static Set<String> CAN_NOT_REMOVE_ADMINIDS = new HashSet<String>(); 
 	
+	public static final String RANDOM = "random";
+	
+	public static final String APPID = "appid";
+	
 	static {
 		CAN_NOT_REMOVE_ADMINIDS.add("admin");
 //		CAN_NOT_REMOVE_ADMINIDS.add("subAdmin");

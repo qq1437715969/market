@@ -1,10 +1,9 @@
 package com.market.utils;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
-import java.util.zip.GZIPInputStream;
 
 public class TokenUtils {
 	
@@ -14,7 +13,29 @@ public class TokenUtils {
 	
 	private static final String WEBSITE = "http://www.market.com";
 	
-	public static String createAppId(String adminId,Date lastLoginTime,String ipAddr) {
+	private static final String DEFAULT_SECRET_METHOD = "MD5";
+	
+	private static final String DEFAULT_SALT = "marketAdmin";
+	
+	private static final Integer DEFAULT_SECRET_TIMES = 5;
+	
+	private static final Integer DEFAULT_TOKEN_TIMES = 2;
+	
+	public static final String RANDOM = "random";
+	
+	public static final String APPID = "appid";
+	
+	/**
+	 * 
+	 * @param adminId
+	 * @param lastLoginTime
+	 * @param ipAddr
+	 * @return 
+	 * Map
+	 * random , 生成appId时的随机数
+	 * appid , 生成的appid
+	 */
+	public static Map<String, String> createAppId(String adminId,Date lastLoginTime,String ipAddr) {
 		String uuid = UUID.randomUUID().toString().replaceAll("-","").trim();
 		StringBuffer sb = new StringBuffer(ADMIN_TOKEN_PRE);
 		sb.append(uuid);
@@ -22,22 +43,29 @@ public class TokenUtils {
 		if(CheckUtil.isBlank(ipAddr)) {
 			ipAddr = DEFAULT_IPADDR;
 		}
-		String str = sb.append(ipAddr).toString();
-		byte[] bytes = null;
-		try {
-			str = URLEncoder.encode(str,"UTF-8");
-			
-//			bytes = str.getBytes("GBK");
-//			bytes = new String(bytes,"GBK").getBytes("UTF-8");
-//			str = new String(bytes,"ISO-8859-1");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		return str;
+		Map<String,String> map = new HashMap<String,String>();
+		map.put(RANDOM,uuid);
+		map.put(APPID,Md5Utils.encryptString(sb.append(ipAddr).toString(),DEFAULT_SALT));
+		return map;
 	}
 	
-	public static void main(String[] args) {
-		String appid = createAppId("admin",new Date(), null);
-		System.out.println(appid);
+	public final static String getAppId(String adminId,Date lastLoginTime,String ipAddr,String random) {
+		StringBuffer sb = new StringBuffer(ADMIN_TOKEN_PRE);
+		sb.append(random);
+		sb.append(WEBSITE);
+		if(CheckUtil.isBlank(ipAddr)) {
+			ipAddr = DEFAULT_IPADDR;
+		}
+		return Md5Utils.encryptString(sb.append(ipAddr).toString(),DEFAULT_SALT);
 	}
+	
+	public static String createToken(String appId,String random) {
+		return Md5Utils.encryptString(appId,random,DEFAULT_TOKEN_TIMES);
+	}
+	
+	public static boolean checkToken(String appId,String random,String token) {
+		String newToken = createToken(appId, random);
+		return token.equals(newToken)?true:false;
+	}
+	
 }

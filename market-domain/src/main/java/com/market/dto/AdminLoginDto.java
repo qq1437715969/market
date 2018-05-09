@@ -8,6 +8,8 @@ public class AdminLoginDto {
 	
 	private String adminName;
 	
+	private Date loginTime;
+	
 	private Date lastLoginTime;
 	
 	private String appId;
@@ -28,6 +30,14 @@ public class AdminLoginDto {
 
 	public void setAdminName(String adminName) {
 		this.adminName = adminName;
+	}
+
+	public Date getLoginTime() {
+		return loginTime;
+	}
+
+	public void setLoginTime(Date loginTime) {
+		this.loginTime = loginTime;
 	}
 
 	public Date getLastLoginTime() {

@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Update;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.market.bean.Admin;
 import com.market.bean.Menu;
+import com.market.dto.AdminLoginDto;
 
 @Mapper
 public interface AdminMapper extends BaseMapper<Admin>  {
@@ -28,7 +29,7 @@ public interface AdminMapper extends BaseMapper<Admin>  {
 	@ResultMap("BaseMenuMap")
 	List<Menu> getAllMenus();
 	
-	@Update("update tb_admin set last_login_time = CURRENT_TIMESTAMP where admin_id = #{adminId}")
-	Integer updateLoginTime(String adminId);
+	@Update("update tb_admin set last_login_time = #{loginTime,jdbcType=TIMESTAMP} where admin_id = #{adminId}")
+	Integer updateLoginTime(AdminLoginDto loginDto);
 
 }
