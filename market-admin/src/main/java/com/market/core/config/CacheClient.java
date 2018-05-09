@@ -91,5 +91,4 @@ public class CacheClient {
 		strRedis.set(key, "", TimeConstant.EXPIRE, TimeUnit.MILLISECONDS);
 	}
 	
-
 }
