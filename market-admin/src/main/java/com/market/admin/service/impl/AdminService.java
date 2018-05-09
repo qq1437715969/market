@@ -20,6 +20,7 @@ import com.market.constant.AdminStatusConstant;
 import com.market.domain.CodeDict;
 import com.market.domain.CommonRsp;
 import com.market.domain.MenuTree;
+import com.market.domain.Response;
 import com.market.dto.AdminLoginDto;
 import com.market.dto.SubAdminRegistDto;
 import com.market.exception.AdminException;
@@ -196,6 +197,24 @@ public class AdminService implements AdminSer {
 		rtnDto.setRoleId(AdminConstant.ADMIN_DEFAULT_ROLEID);
 		rsp.setData(rtnDto);
 		return rsp;
+	}
+	
+	@Override
+	public Response remove(String adminId) {
+		Response response = new Response();
+		response.setCode(CodeDict.FAILED.getCode());
+		Admin admin = adminMapper.selectById(adminId);
+		if(null==admin) {
+			response.setMsg("当前管理员不存在");
+			return response;
+		}
+		Integer delete = adminMapper.deleteById(adminId);
+		if(delete!=1) {
+			throw new AdminException("数据异常");
+		}
+		response.setCode(CodeDict.SUCCESS.getCode());
+		response.setMsg("管理员删除成功");
+		return response;
 	}
 
 	/**

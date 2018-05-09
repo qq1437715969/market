@@ -6,6 +6,7 @@ import com.market.bean.Admin;
 import com.market.bean.Menu;
 import com.market.domain.CommonRsp;
 import com.market.domain.MenuTree;
+import com.market.domain.Response;
 import com.market.dto.AdminLoginDto;
 import com.market.dto.SubAdminRegistDto;
 
@@ -27,4 +28,5 @@ public interface AdminSer {
 
 	CommonRsp<SubAdminRegistDto> createSubAdmin(String subAdmin, String pass);
 	
+	Response remove(String adminId);
 }

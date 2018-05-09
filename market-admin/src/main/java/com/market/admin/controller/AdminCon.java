@@ -11,9 +11,11 @@ import com.alibaba.fastjson.JSON;
 import com.market.admin.service.AdminSer;
 import com.market.bean.Admin;
 import com.market.bean.Menu;
+import com.market.constant.AdminConstant;
 import com.market.domain.CodeDict;
 import com.market.domain.CommonRsp;
 import com.market.domain.MenuTree;
+import com.market.domain.Response;
 import com.market.dto.SubAdminRegistDto;
 import com.market.utils.CheckUtil;
 
@@ -90,6 +92,20 @@ public class AdminCon extends BaseCon {
 			return rsp;
 		}
 		return adminService.createSubAdmin(subAdmin,pass);
+	}
+	
+	@RequestMapping("/removeSubAdmin.do")
+	public Response removeSubAdmin(String adminId) {
+		Response response = new Response();
+		response.setCode(CodeDict.FAILED.getCode());
+		if(CheckUtil.isBlank(adminId)) {
+			response.setMsg("参数不合法");
+		}
+		if(AdminConstant.CAN_NOT_REMOVE_ADMINIDS.contains(adminId)) {
+			response.setMsg("被保护的adminId,你无法删除");
+			return response;
+		}
+		return adminService.remove(adminId);
 	}
 	
 }
