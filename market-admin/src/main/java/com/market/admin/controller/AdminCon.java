@@ -12,6 +12,7 @@ import com.market.admin.service.AdminSer;
 import com.market.bean.Admin;
 import com.market.bean.Menu;
 import com.market.constant.AdminConstant;
+import com.market.core.annotion.AdminCheckLogin;
 import com.market.domain.CodeDict;
 import com.market.domain.CommonRsp;
 import com.market.domain.MenuTree;
@@ -48,7 +49,10 @@ public class AdminCon extends BaseCon {
 	}
 	
 	@RequestMapping("/getMenusById.do")
-	public CommonRsp<List<MenuTree>> getMenusById(String adminId) {
+	@AdminCheckLogin
+	public CommonRsp<List<MenuTree>> getMenusById(Admin admin) {
+//		,String adminId
+		String adminId = "";
 		CommonRsp<List<MenuTree>> rsp = new CommonRsp<List<MenuTree>>();
 		rsp.setCode(CodeDict.FAILED.getCode());
 		if(CheckUtil.isBlank(adminId)) {
