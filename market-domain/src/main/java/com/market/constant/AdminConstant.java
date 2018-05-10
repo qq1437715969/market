@@ -19,6 +19,8 @@ public class AdminConstant {
 	
 	public static final String ONLINE_APPID_PRE = "OnLineAppId_";
 	
+	public static final String ACCESSTOKEN  = "accessToken";
+	
 	static {
 		CAN_NOT_REMOVE_ADMINIDS.add("admin");
 //		CAN_NOT_REMOVE_ADMINIDS.add("subAdmin");
