@@ -10,6 +10,10 @@ import com.market.dto.AdminLoginDto;
 public class AdminLoginBean extends AdminLoginDto{
 
 	private String random;
+	
+	private String randomBak;
+	
+	private String loginIpAddr;
 
 	public String getRandom() {
 		return random;
@@ -17,6 +21,22 @@ public class AdminLoginBean extends AdminLoginDto{
 
 	public void setRandom(String random) {
 		this.random = random;
+	}
+
+	public String getRandomBak() {
+		return randomBak;
+	}
+
+	public void setRandomBak(String randomBak) {
+		this.randomBak = randomBak;
+	}
+
+	public String getLoginIpAddr() {
+		return loginIpAddr;
+	}
+
+	public void setLoginIpAddr(String loginIpAddr) {
+		this.loginIpAddr = loginIpAddr;
 	}
 	
 }

@@ -16,6 +16,10 @@ public class AdminLoginDto {
 	
 	private String accessToken;
 
+	private String appIdBak;
+	
+	private String accessTokenBak;
+	
 	public String getAdminId() {
 		return adminId;
 	}
@@ -64,4 +68,20 @@ public class AdminLoginDto {
 		this.accessToken = accessToken;
 	}
 
+	public String getAppIdBak() {
+		return appIdBak;
+	}
+
+	public void setAppIdBak(String appIdBak) {
+		this.appIdBak = appIdBak;
+	}
+
+	public String getAccessTokenBak() {
+		return accessTokenBak;
+	}
+
+	public void setAccessTokenBak(String accessTokenBak) {
+		this.accessTokenBak = accessTokenBak;
+	}
+	
 }

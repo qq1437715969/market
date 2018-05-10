@@ -15,11 +15,17 @@ public class AdminConstant {
 	
 	public static final String APPID = "appid";
 	
+	public static final String APPID_BAK = "appidBak";
+	
 	public static final String ADMIN_ONLINE_PRE = "OnLineAdmin_";
+	
+	public static final String ADMIN_ONLINE_BAK_PRE = "OnLineAdmin_BAK";
 	
 	public static final String ONLINE_APPID_PRE = "OnLineAppId_";
 	
 	public static final String ACCESSTOKEN  = "accessToken";
+	
+	public static final String ACCESSTOKEN_BAK  = "accessTokenBak";
 	
 	static {
 		CAN_NOT_REMOVE_ADMINIDS.add("admin");

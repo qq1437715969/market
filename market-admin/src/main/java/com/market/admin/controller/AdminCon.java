@@ -13,6 +13,7 @@ import com.market.bean.Admin;
 import com.market.bean.Menu;
 import com.market.constant.AdminConstant;
 import com.market.core.annotion.AdminCheckLogin;
+import com.market.core.annotion.RealIP;
 import com.market.domain.BaseAdminBean;
 import com.market.domain.CodeDict;
 import com.market.domain.CommonRsp;
@@ -80,6 +81,7 @@ public class AdminCon extends BaseCon {
 	}
 	
 	@RequestMapping("/listAllMenus.do")
+//	@RealIP
 	@AdminCheckLogin
 	public List<MenuTree> listAllMenus(BaseAdminBean admin){
 		List<MenuTree> menus = adminService.getAllMenus();

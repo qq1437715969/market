@@ -167,6 +167,13 @@ public class AdminService implements AdminSer {
 		}
 		
 		Map<String, String> map = TokenUtils.createAppId(adminId, loginDto.getLoginTime(), ipAddr);
+		Map<String, String> noIpMap = TokenUtils.createAppId(adminId, loginDto.getLoginTime(), null);
+		
+		String appIdBak = noIpMap.get(AdminConstant.APPID);
+		String randomBak = noIpMap.get(AdminConstant.RANDOM);
+		loginDto.setAppIdBak(appIdBak);
+		loginDto.setAccessTokenBak(TokenUtils.createToken(appIdBak, randomBak));
+		
 		String appId = map.get(AdminConstant.APPID);
 		String random = map.get(AdminConstant.RANDOM);
 		loginDto.setAppId(appId);
@@ -177,10 +184,14 @@ public class AdminService implements AdminSer {
 		loginBean.setLastLoginTime(admin.getLastLoginTime());
 		loginBean.setLoginTime(loginDto.getLoginTime());
 		loginBean.setRandom(random);
+		loginBean.setLoginIpAddr(ipAddr);
+		loginBean.setRandomBak(randomBak);
+
 		String token = TokenUtils.createToken(appId, random);
 		loginBean.setAccessToken(token);
 		loginDto.setAccessToken(token);
 		client.set(AdminConstant.ADMIN_ONLINE_PRE+loginBean.getAdminId(),loginBean);
+//		client.set(AdminConstant.ADMIN_ONLINE_BAK_PRE+loginBean.getAdminId(), obj);
 		rsp.setCode(CodeDict.SUCCESS.getCode());
 		rsp.setMsg("登陆成功");
 		rsp.setData(loginDto);
