@@ -8,7 +8,7 @@ public class BaseAdminBean {
 	
 	private String appid;
 	
-	private String ipArrd;
+	private String ipAddr;
 	
 	private String accessToken;
 	
@@ -32,20 +32,20 @@ public class BaseAdminBean {
 		this.appid = appid;
 	}
 
+	public String getIpAddr() {
+		return ipAddr;
+	}
+
+	public void setIpAddr(String ipAddr) {
+		this.ipAddr = ipAddr;
+	}
+
 	public String getAccessToken() {
 		return accessToken;
 	}
 
 	public void setAccessToken(String accessToken) {
 		this.accessToken = accessToken;
-	}
-
-	public String getIpArrd() {
-		return ipArrd;
-	}
-
-	public void setIpArrd(String ipArrd) {
-		this.ipArrd = ipArrd;
 	}
 
 	public Date getLoginTime() {
