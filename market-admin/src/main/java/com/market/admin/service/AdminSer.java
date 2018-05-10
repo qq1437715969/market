@@ -24,7 +24,7 @@ public interface AdminSer {
 
 	List<MenuTree> getAllMenus();
 
-	CommonRsp<AdminLoginDto> login(String adminId, String pass);
+	CommonRsp<AdminLoginDto> login(String adminId, String pass,String ipAddr);
 
 	CommonRsp<SubAdminRegistDto> createSubAdmin(String subAdmin, String pass);
 	

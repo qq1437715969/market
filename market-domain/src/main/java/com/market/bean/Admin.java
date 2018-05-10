@@ -3,16 +3,13 @@ package com.market.bean;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.market.domain.BaseAdminBean;
 import com.market.domain.BaseBean;
 
 @TableName("tb_admin")
-public class Admin extends BaseBean{
-	
-	private String adminId;
+public class Admin extends BaseAdminBean{
 	
 	private String adminName;
-	
-	private String pass;
 	
 	private Date createTime;
 	
@@ -28,28 +25,12 @@ public class Admin extends BaseBean{
 	
 	private String roleIds;
 
-	public String getAdminId() {
-		return adminId;
-	}
-
-	public void setAdminId(String adminId) {
-		this.adminId = adminId;
-	}
-
 	public String getAdminName() {
 		return adminName;
 	}
 
 	public void setAdminName(String adminName) {
 		this.adminName = adminName;
-	}
-
-	public String getPass() {
-		return pass;
-	}
-
-	public void setPass(String pass) {
-		this.pass = pass;
 	}
 
 	public Date getCreateTime() {

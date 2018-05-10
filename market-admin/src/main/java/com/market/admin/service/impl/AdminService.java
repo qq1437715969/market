@@ -139,7 +139,7 @@ public class AdminService implements AdminSer {
 
 	@Override
 	@Transactional(rollbackFor=Exception.class)
-	public CommonRsp<AdminLoginDto> login(String adminId, String pass) {
+	public CommonRsp<AdminLoginDto> login(String adminId, String pass,String ipAddr) {
 		Admin admin = adminMapper.selectById(adminId);
 		CommonRsp<AdminLoginDto> rsp = new CommonRsp<AdminLoginDto>();
 		rsp.setCode(CodeDict.FAILED.getCode());
@@ -166,7 +166,7 @@ public class AdminService implements AdminSer {
 			throw new AdminException("登陆失败，请联系管理员");
 		}
 		
-		Map<String, String> map = TokenUtils.createAppId(adminId, loginDto.getLoginTime(), null);
+		Map<String, String> map = TokenUtils.createAppId(adminId, loginDto.getLoginTime(), ipAddr);
 		String appId = map.get(AdminConstant.APPID);
 		String random = map.get(AdminConstant.RANDOM);
 		loginDto.setAppId(appId);
@@ -180,7 +180,6 @@ public class AdminService implements AdminSer {
 		String token = TokenUtils.createToken(appId, random);
 		loginBean.setAccessToken(token);
 		loginDto.setAccessToken(token);
-		client.set(AdminConstant.ONLINE_APPID_PRE+appId,loginBean.getAdminId());
 		client.set(AdminConstant.ADMIN_ONLINE_PRE+loginBean.getAdminId(),loginBean);
 		rsp.setCode(CodeDict.SUCCESS.getCode());
 		rsp.setMsg("登陆成功");

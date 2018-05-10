@@ -15,6 +15,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.market.bean.AdminLoginBean;
 import com.market.constant.AdminConstant;
+import com.market.core.annotion.RealIP;
 import com.market.core.config.CacheClient;
 import com.market.domain.BaseAdminBean;
 import com.market.exception.AdminException;
@@ -47,6 +48,7 @@ public class CheckLoginAspect {
      * @throws Throwable
      */
     
+    @RealIP
     @Around("@annotation(com.market.core.annotion.AdminCheckLogin) && args(admin)")
     public Object around(ProceedingJoinPoint pjp,BaseAdminBean admin) throws Throwable {
         //获取请求头信息

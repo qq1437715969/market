@@ -3,8 +3,12 @@ package com.market.domain;
 import java.util.Date;
 
 public class BaseAdminBean {
+	
+	private String userId;
 
 	private String adminId;
+	
+	private String pass;
 	
 	private String appid;
 	
@@ -16,12 +20,28 @@ public class BaseAdminBean {
 	
 	private Long longTime;
 
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
 	public String getAdminId() {
 		return adminId;
 	}
 
 	public void setAdminId(String adminId) {
 		this.adminId = adminId;
+	}
+	
+	public String getPass() {
+		return pass;
+	}
+
+	public void setPass(String pass) {
+		this.pass = pass;
 	}
 
 	public String getAppid() {

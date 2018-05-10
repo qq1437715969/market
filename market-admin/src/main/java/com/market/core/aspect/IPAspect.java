@@ -24,14 +24,12 @@ import javax.servlet.http.HttpServletRequest;
 public class IPAspect {
 
     // 配置前置通知
-    @Before("@annotation(com.market.core.annotion.RealIP) && args(bean)")
-    public void before(JoinPoint joinPoint, BaseAdminBean bean) {
+    @Before("@annotation(com.market.core.annotion.RealIP) && args(admin)")
+    public void before(JoinPoint joinPoint, BaseAdminBean admin) {
         // 接收到请求，记录请求内容
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         String ip = IPUtils.getIpAddr(request);
-//        String comeFrom = IPUtils.getComeFrom(request,log);// comeFrom
-        bean.setIpAddr(ip);
-//        bean.setComeFrom(comeFrom);
+        admin.setIpAddr(ip);
     }
 }
