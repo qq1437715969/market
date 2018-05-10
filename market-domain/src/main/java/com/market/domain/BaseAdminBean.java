@@ -13,6 +13,8 @@ public class BaseAdminBean {
 	private String accessToken;
 	
 	private Date loginTime;
+	
+	private Long longTime;
 
 	public String getAdminId() {
 		return adminId;
@@ -52,6 +54,14 @@ public class BaseAdminBean {
 
 	public void setLoginTime(Date loginTime) {
 		this.loginTime = loginTime;
+	}
+
+	public Long getLongTime() {
+		return longTime;
+	}
+
+	public void setLongTime(Long longTime) {
+		this.longTime = longTime;
 	}
 	
 }

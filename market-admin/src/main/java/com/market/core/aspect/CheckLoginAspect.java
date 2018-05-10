@@ -54,7 +54,9 @@ public class CheckLoginAspect {
         HttpServletRequest request = attributes.getRequest();
         String appid = request.getHeader(AdminConstant.APPID);
         String token = request.getHeader(AdminConstant.ACCESSTOKEN);
-        Date time = admin.getLoginTime();
+//        Date time = admin.getLoginTime();
+        Long longTime = admin.getLongTime();
+        Date time = new Date(longTime);
         if(CheckUtil.isBlank(appid)||CheckUtil.isBlank(token)) {
         	throw new AdminException("请求参数异常,无法为您服务");
         }
