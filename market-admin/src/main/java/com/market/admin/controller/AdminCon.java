@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
+import com.market.admin.query.AdminQuery;
 import com.market.admin.service.AdminSer;
 import com.market.bean.Admin;
 import com.market.bean.Menu;
@@ -31,21 +32,23 @@ public class AdminCon extends BaseCon {
 	private AdminSer adminService;
 	
 	@RequestMapping("/queryById.do")
-	public CommonRsp<Admin> queryById(String adminId) {
+	@AdminCheckLogin
+	public CommonRsp<Admin> queryById(AdminQuery admin) {
 		CommonRsp<Admin> rsp = new CommonRsp<Admin>();
 		rsp.setCode(CodeDict.FAILED.getCode());
+		String adminId = admin.getQueryAdminId();
 		if(CheckUtil.isBlank(adminId)) {
 			rsp.setMsg("必要参数缺失");
 			return rsp;
 		}
-		Admin admin = adminService.queryById(adminId);
-		if(null==admin) {
+		Admin dbAdmin = adminService.queryById(adminId);
+		if(null==dbAdmin) {
 			rsp.setMsg("查询无果");
 			return rsp;
 		}
 		rsp.setCode(CodeDict.SUCCESS.getCode());
 		rsp.setMsg("查询成功");
-		rsp.setData(admin);
+		rsp.setData(dbAdmin);
 		log.info(JSON.toJSONString(rsp));
 		return rsp;
 	}
