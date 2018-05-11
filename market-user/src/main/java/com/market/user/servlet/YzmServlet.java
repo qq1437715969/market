@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.market.constant.UserConstant;
@@ -22,6 +21,7 @@ import com.market.core.annotion.RealIP;
 import com.market.core.config.CacheClient;
 import com.market.exception.UserException;
 import com.market.utils.CheckUtil;
+import com.market.utils.IPUtils;
 import com.market.utils.VerificationCodeTool;
 
 import lombok.extern.slf4j.Slf4j;
@@ -54,6 +54,7 @@ public class YzmServlet extends HttpServlet {
 	@RealIP
 	private void processRequest(HttpServletRequest req, HttpServletResponse resp) {
 		try {
+			String ipAddr = IPUtils.getIpAddr(req);
 			String imgYzmPur = req.getParameter(UserConstant.IMG_YZM_PUR_STR);
 			if(CheckUtil.isBlank(imgYzmPur)) {
 				imgYzmPur = req.getHeader(UserConstant.IMG_YZM_PUR_STR);
@@ -69,8 +70,10 @@ public class YzmServlet extends HttpServlet {
 		    VerificationCodeTool vct = new VerificationCodeTool();
 		    BufferedImage image = vct.drawVerificationCodeImage();
 		    ServletOutputStream localServletOutputStream = resp.getOutputStream();
-		    String ip = (String)req.getAttribute("ipAddr");
-		   	client.set(UserConstant.IMG_YZM_PRE+ip,vct.getXyresult()+"");
+		   	if(ipAddr.indexOf(":")!=-1) {
+		   		ipAddr = ipAddr.replaceAll(":","").trim();
+		   	}
+		    client.set(UserConstant.IMG_YZM_PRE+ipAddr,vct.getXyresult()+"");
 		    //localHttpSession.setAttribute("rand", vct.getXyresult()+"");
 			//localHttpSession.setAttribute("randCount", 0);
 			ImageIO.write(image, "JPEG", localServletOutputStream);

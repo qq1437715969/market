@@ -16,6 +16,7 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import com.market.constant.UserConstant;
 import com.market.core.annotion.RealIP;
 import com.market.core.config.CacheClient;
+import com.market.utils.IPUtils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -40,7 +41,8 @@ public class RandCodeServlet extends HttpServlet {
 	private void processRequest(HttpServletRequest req,
 			HttpServletResponse resp)
 			throws ServletException, IOException {
-
+		
+		String ipAddr = IPUtils.getIpAddr(req);
 		resp.setContentType("image/jpeg");
 		resp.setHeader("Pragma", "no-cache");
 		resp.setHeader("Cache-Control", "no-cache");
@@ -73,8 +75,10 @@ public class RandCodeServlet extends HttpServlet {
 							.nextInt(110)));
 			localGraphics.drawString(str3, 13 * l + 6, 16);
 		}
-		String ip = (String)req.getAttribute("ipAddr");
-		client.set(UserConstant.IMG_YZM_PRE+ip, str2.toLowerCase());
+		if(ipAddr.indexOf(":")!=-1) {
+	   		ipAddr = ipAddr.replaceAll(":","").trim();
+	   	}
+		client.set(UserConstant.IMG_YZM_PRE+ipAddr, str2.toLowerCase());
 //		HttpSession session = req.getSession(true);
 //		if (session.isNew()) {
 //			session.setMaxInactiveInterval(300);

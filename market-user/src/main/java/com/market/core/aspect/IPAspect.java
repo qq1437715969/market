@@ -39,14 +39,14 @@ public class IPAspect {
         admin.setIpAddr(ip);
     }
     
-    @Before("@annotation(com.market.core.annotion.RealIP) && args(req,resp)")
-    public void before(JoinPoint joinPoint, HttpServletRequest req,HttpServletResponse resp) {
-        // 接收到请求，记录请求内容
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
-        String ip = IPUtils.getIpAddr(request);
-        req.setAttribute("ipAddr",ip);
-    }
+//    @Before("@annotation(com.market.core.annotion.RealIP) && args(req,resp)")
+//    public void before(JoinPoint joinPoint, HttpServletRequest req,HttpServletResponse resp) {
+//        // 接收到请求，记录请求内容
+//        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+//        HttpServletRequest request = attributes.getRequest();
+//        String ip = IPUtils.getIpAddr(request);
+//        req.setAttribute("ipAddr",ip);
+//    }
     
     
 }
