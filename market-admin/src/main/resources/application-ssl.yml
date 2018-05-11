@@ -1,0 +1,8 @@
+
+  ssl:
+    key-store: keystore.p12
+    key-password: marketAdmin
+    key-store-type: PKCS12
+    key-store-provider: SUN
+    key-alias: tomcat
+    enabled: true

@@ -1,14 +1,7 @@
 package com.market;
 
-import org.apache.catalina.Context;
-import org.apache.catalina.connector.Connector;
-import org.apache.tomcat.util.descriptor.web.SecurityCollection;
-import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 @SpringBootApplication
@@ -18,23 +11,31 @@ public class AdminApplication {
 		SpringApplication.run(AdminApplication.class, args);
 	}
 	
-//	@Bean
+    /**
+     * 配置一个TomcatEmbeddedServletContainerFactory bean
+     * @return
+     */
+//    @Bean
 //    public EmbeddedServletContainerFactory servletContainer() {
+//
 //        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory() {
+//
 //            @Override
 //            protected void postProcessContext(Context context) {
-//                SecurityConstraint constraint = new SecurityConstraint();
-//                constraint.setUserConstraint("CONFIDENTIAL");
+//
+//                SecurityConstraint securityConstraint = new SecurityConstraint();
+//                securityConstraint.setUserConstraint("CONFIDENTIAL");
 //                SecurityCollection collection = new SecurityCollection();
 //                collection.addPattern("/*");
-//                constraint.addCollection(collection);
-//                context.addConstraint(constraint);
+//                securityConstraint.addCollection(collection);
+//                context.addConstraint(securityConstraint);
 //            }
 //        };
-//        tomcat.addAdditionalTomcatConnectors(httpConnector());
+//        tomcat.addAdditionalTomcatConnectors(initiateHttpConnector());
 //        return tomcat;
 //    }
-//
+
+	
 //    @Bean
 //    public Connector httpConnector() {
 //        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");

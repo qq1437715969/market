@@ -1,6 +1,7 @@
 spring:
   profiles:
-    active: dev
+    active:
+    - dev
     
   #访问资源gzip压缩
   compression:
