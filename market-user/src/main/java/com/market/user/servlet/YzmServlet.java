@@ -21,6 +21,7 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import com.market.constant.UserConstant;
 import com.market.core.annotion.RealIP;
 import com.market.core.config.CacheClient;
+import com.market.core.constant.TimeConstant;
 import com.market.exception.UserException;
 import com.market.utils.CheckUtil;
 import com.market.utils.IPUtils;
@@ -79,7 +80,7 @@ public class YzmServlet extends HttpServlet {
 		   	Map<String, String> map = new HashMap<String, String>();
 		   	map.put(UserConstant.IMG_YZM_PUR_STR,imgYzmPur);
 		   	map.put(UserConstant.IMG_YZM_STR,vct.getXyresult()+"");
-		    client.set(UserConstant.IMG_YZM_PRE+ipAddr,map);
+		    client.set(UserConstant.IMG_YZM_PRE+ipAddr,map,TimeConstant.MINUTE_5);
 		    //localHttpSession.setAttribute("rand", vct.getXyresult()+"");
 			//localHttpSession.setAttribute("randCount", 0);
 			ImageIO.write(image, "JPEG", localServletOutputStream);
