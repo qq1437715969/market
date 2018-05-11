@@ -3,9 +3,11 @@ package com.market.user.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.market.bean.UserBean;
 import com.market.domain.CodeDict;
 import com.market.domain.CommonRsp;
+import com.market.domain.UserRegistBean;
 import com.market.dto.UserLoginDto;
 import com.market.user.service.UserLoginSer;
 import com.market.utils.CheckUtil;
@@ -34,7 +36,9 @@ public class UserLoginCon {
 	}
 	
 	@PostMapping("/regist.do")
-	public CommonRsp<UserLoginDto> regist(){
+	public CommonRsp<UserLoginDto> regist(UserRegistBean user){
+		
+		
 		
 		
 		return null;
