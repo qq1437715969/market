@@ -27,6 +27,8 @@ public class TimeConstant {
 	
 	public static final Long MINUTE = 60000L;
 	
+	public static final Long MINUTE_5 = 300000L;
+	
 	public static final Long MINUTE_30 = 1800000L;
 	
 	public static final Long SECOND = 1000L;

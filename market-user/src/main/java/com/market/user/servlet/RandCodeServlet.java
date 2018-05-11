@@ -16,6 +16,7 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import com.market.constant.UserConstant;
 import com.market.core.annotion.RealIP;
 import com.market.core.config.CacheClient;
+import com.market.core.constant.TimeConstant;
 import com.market.exception.UserException;
 import com.market.utils.CheckUtil;
 import com.market.utils.IPUtils;
@@ -92,7 +93,7 @@ public class RandCodeServlet extends HttpServlet {
 		Map<String, String> map = new HashMap<String, String>();
 	   	map.put(UserConstant.IMG_YZM_PUR_STR,imgYzmPur);
 	   	map.put(UserConstant.IMG_YZM_STR,str2.toLowerCase());
-		client.set(UserConstant.IMG_YZM_PRE+ipAddr,map);
+		client.set(UserConstant.IMG_YZM_PRE+ipAddr,map,TimeConstant.MINUTE_5);
 //		HttpSession session = req.getSession(true);
 //		if (session.isNew()) {
 //			session.setMaxInactiveInterval(300);
