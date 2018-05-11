@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +27,7 @@ import com.market.utils.VerificationCodeTool;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
+@WebServlet(urlPatterns="/user/imgYzm2.yzm")
 public class YzmServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -7279575363699088431L;
