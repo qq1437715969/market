@@ -2,6 +2,8 @@ package com.market.user.servlet;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletConfig;
@@ -62,6 +64,7 @@ public class YzmServlet extends HttpServlet {
 			if(CheckUtil.isBlank(imgYzmPur)) {
 				throw new UserException("获取验证码参数缺失");
 			}
+//			Integer yzmPurNum = Integer.parseInt(imgYzmPur);
 			resp.setContentType("image/jpeg");
 			resp.setHeader("Pragma", "No-cache");
 			resp.setHeader("Cache-Control", "no-cache");
@@ -73,7 +76,10 @@ public class YzmServlet extends HttpServlet {
 		   	if(ipAddr.indexOf(":")!=-1) {
 		   		ipAddr = ipAddr.replaceAll(":","").trim();
 		   	}
-		    client.set(UserConstant.IMG_YZM_PRE+ipAddr,vct.getXyresult()+"");
+		   	Map<String, String> map = new HashMap<String, String>();
+		   	map.put(UserConstant.IMG_YZM_PUR_STR,imgYzmPur);
+		   	map.put(UserConstant.IMG_YZM_STR,vct.getXyresult()+"");
+		    client.set(UserConstant.IMG_YZM_PRE+ipAddr,map);
 		    //localHttpSession.setAttribute("rand", vct.getXyresult()+"");
 			//localHttpSession.setAttribute("randCount", 0);
 			ImageIO.write(image, "JPEG", localServletOutputStream);

@@ -16,11 +16,15 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import com.market.constant.UserConstant;
 import com.market.core.annotion.RealIP;
 import com.market.core.config.CacheClient;
+import com.market.exception.UserException;
+import com.market.utils.CheckUtil;
 import com.market.utils.IPUtils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 @WebServlet(urlPatterns="/user/imgYzm1.yzm")
@@ -43,6 +47,13 @@ public class RandCodeServlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		String ipAddr = IPUtils.getIpAddr(req);
+		String imgYzmPur = req.getParameter(UserConstant.IMG_YZM_PUR_STR);
+		if(CheckUtil.isBlank(imgYzmPur)) {
+			imgYzmPur = req.getHeader(UserConstant.IMG_YZM_PUR_STR);
+		}
+		if(CheckUtil.isBlank(imgYzmPur)) {
+			throw new UserException("获取验证码参数缺失");
+		}
 		resp.setContentType("image/jpeg");
 		resp.setHeader("Pragma", "no-cache");
 		resp.setHeader("Cache-Control", "no-cache");
@@ -78,7 +89,10 @@ public class RandCodeServlet extends HttpServlet {
 		if(ipAddr.indexOf(":")!=-1) {
 	   		ipAddr = ipAddr.replaceAll(":","").trim();
 	   	}
-		client.set(UserConstant.IMG_YZM_PRE+ipAddr, str2.toLowerCase());
+		Map<String, String> map = new HashMap<String, String>();
+	   	map.put(UserConstant.IMG_YZM_PUR_STR,imgYzmPur);
+	   	map.put(UserConstant.IMG_YZM_STR,str2.toLowerCase());
+		client.set(UserConstant.IMG_YZM_PRE+ipAddr,map);
 //		HttpSession session = req.getSession(true);
 //		if (session.isNew()) {
 //			session.setMaxInactiveInterval(300);
