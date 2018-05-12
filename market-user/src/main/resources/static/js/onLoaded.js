@@ -16,9 +16,8 @@ $(function(){
 	window.baseInfo = comInfo;
 });
 
-
 $(function(){
-	var head = {"typ":"JWT","alg":"HS256"};
+	var head = {"typ":"JWT","alg":"SHA256"};
 	var userInfo = {"ipAddr":comInfo};
 	head = JSON.stringify(head);
 	userInfo = Base.encode(JSON.stringify(userInfo));
@@ -30,9 +29,11 @@ $(function(){
 	sign = sign+"."+salt;
 	console.log("signMsg:"+sign);
 	var time = new Date().getTime();
+	var referStr = {"refer":window.location.href};
+	referStr = Base.encode(JSON.stringify(referStr));
 	$.ajax({
 		type:"get",
-		data:{"info":info,"sign":sign,"accessTime":time},
+		data:{"foot":referStr,"info":info,"sign":sign,"accessTime":time},
 		url:"http://localhost:26888/user/registPre.do",
 		async:true,
 		success: function(res){
