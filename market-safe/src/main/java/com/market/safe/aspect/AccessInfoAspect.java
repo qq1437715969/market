@@ -27,7 +27,7 @@ import com.market.utils.Md5Utils;
 
 @Component
 @Aspect
-@Order(value = 1)
+@Order(value = 2)
 public class AccessInfoAspect {
 
 	  private Logger log = LoggerFactory.getLogger("userSafe");

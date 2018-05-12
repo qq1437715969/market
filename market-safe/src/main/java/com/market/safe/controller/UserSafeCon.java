@@ -4,6 +4,7 @@ package com.market.safe.controller;
 import java.io.UnsupportedEncodingException;
 
 import javax.script.ScriptException;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.shiro.crypto.hash.Sha256Hash;
@@ -19,6 +20,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.market.bean.UserRegistSafeBean;
 import com.market.domain.UserAccessInfo;
 import com.market.exception.UserException;
+import com.market.safe.annotion.CheckHeaders;
 import com.market.safe.annotion.GetAccessInfo;
 import com.market.safe.config.CacheClient;
 import com.market.utils.Base64Util;
@@ -36,7 +38,11 @@ public class UserSafeCon {
 	@Autowired
 	private CacheClient client;
 	
+	@Autowired
+	private HttpServletRequest req;
+	
 	@GetMapping("/registPre.do")
+	@CheckHeaders
 	@GetAccessInfo
 	public void registPre(UserRegistSafeBean safe) throws UnsupportedEncodingException {
 		UserAccessInfo access = (UserAccessInfo)safe.getData();

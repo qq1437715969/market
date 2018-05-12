@@ -5,6 +5,8 @@ import com.market.domain.UserAccessInfo;
 
 public class UserSafeBean<T> extends BaseBean {
 	
+	private String foot;
+	
 	private String info;
 	
 	private String sign;
@@ -14,6 +16,14 @@ public class UserSafeBean<T> extends BaseBean {
 	private Long lastSafeTime;
 	
 	private T data; 
+
+	public String getFoot() {
+		return foot;
+	}
+
+	public void setFoot(String foot) {
+		this.foot = foot;
+	}
 
 	public String getInfo() {
 		return info;
