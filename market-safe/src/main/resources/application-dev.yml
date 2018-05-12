@@ -1,6 +1,8 @@
 
 server:
   port: 26888
+  tomcat:
+    uri-encoding: UTF-8
 
 
 
