@@ -17,22 +17,4 @@ public class MarketApplication {
 	}
 	
 	
-//	@Bean
-//	public ServletRegistrationBean randCodeServletRegistration() {
-//		ServletRegistrationBean registration = new ServletRegistrationBean(new RandCodeServlet());
-//		registration.addUrlMappings("/user/imgYzm1.yzm");
-//		return registration;
-//	}
-
-	/**
-	 * 图形计算验证码servlet
-	 * @return
-	 */
-//	@Bean
-//	public ServletRegistrationBean yzmServletRegistration() {
-//		ServletRegistrationBean registration = new ServletRegistrationBean(new YzmServlet());
-//		registration.addUrlMappings("/user/imgYzm2.yzm");
-//		return registration;
-//	}
-
 }
