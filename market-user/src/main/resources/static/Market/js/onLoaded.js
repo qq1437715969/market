@@ -34,7 +34,7 @@ $(function(){
 	$.ajax({
 		type:"get",
 		data:{"foot":referStr,"info":info,"sign":sign,"accessTime":time},
-		url:"http://localhost:26888/user/registPre.do",
+		url:"http://www.Market.com:26888/user/registPre.do",
 		async:true,
 		success: function(res){
 			

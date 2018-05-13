@@ -48,6 +48,7 @@ public class UserSafeCon {
 		UserAccessInfo access = (UserAccessInfo)safe.getData();
 		String salt = SaltUtils.createSalt(access.toJson());
 		String lastSalt = SaltUtils.createSecSaltNum(access.toJson(),salt,3);
+		log.info(lastSalt);
 	}
 	
 	

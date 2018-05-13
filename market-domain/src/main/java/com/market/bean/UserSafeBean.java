@@ -1,9 +1,12 @@
 package com.market.bean;
 
 import com.market.domain.BaseBean;
-import com.market.domain.UserAccessInfo;
 
 public class UserSafeBean<T> extends BaseBean {
+	
+	private String imei;
+	
+	private int mobileType; // 0 web 1安卓 2apple
 	
 	private String foot;
 	
@@ -16,6 +19,22 @@ public class UserSafeBean<T> extends BaseBean {
 	private Long lastSafeTime;
 	
 	private T data; 
+	
+	public String getImei() {
+		return imei;
+	}
+
+	public void setImei(String imei) {
+		this.imei = imei;
+	}
+
+	public int getMobileType() {
+		return mobileType;
+	}
+
+	public void setMobileType(int mobileType) {
+		this.mobileType = mobileType;
+	}
 
 	public String getFoot() {
 		return foot;

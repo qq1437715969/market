@@ -1,5 +1,8 @@
 package com.market.safe.aspect;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.codec.binary.Base64;
@@ -28,7 +31,22 @@ import com.market.utils.CheckUtil;
 public class HeadersAspect {
 	 private Logger log = LoggerFactory.getLogger("userSafe");
 	
-	 private String from = "http://127.0.0.1:8020/Market/";
+	 private final static String user_url1 = "http://localhost:16888/Market/";
+	 
+	 private final static String user_url2 = "http://127.0.0.1:16888/Market/";
+	 
+	 private final static String user_url3 = "http://192.168.0.111/Market/";
+	 
+	 private final static String user_url4 = "http://www.market.com/";
+
+	 private static Set<String> userUrls = new HashSet<String>();
+	 
+	 static {
+		 userUrls.add(user_url1);
+		 userUrls.add(user_url2);
+		 userUrls.add(user_url3);
+		 userUrls.add(user_url4);
+	 }
 	 
 	  @Before("@annotation(com.market.safe.annotion.CheckHeaders) && args(safe)")
 	  public void before(JoinPoint joinPoint, UserSafeBean safe) {
@@ -43,12 +61,37 @@ public class HeadersAspect {
 	        log.info(foot);
 	        JSONObject json = JSON.parseObject(foot);
 	        String refer = json.getString("refer");
-	        if(refer.indexOf("?")!=-1) {
-	        	if(refer.indexOf(from)==-1) {
-	        		throw new UserException("请求来源有误无法服务");
-	        	}
-	        }else {
-	        	throw new UserException("参数缺失无法服务");
-	        }
+	        int mobile = safe.getMobileType();
+	        switch (mobile) {
+			case 0:
+				checkWebRefer(refer);
+				break;
+			case 1:
+				checkAnZhuoRefer(refer);
+			default:
+				break;
+			}
+	        
 	  }
+
+	private void checkAnZhuoRefer(String refer) {
+		
+	}
+
+	private void checkWebRefer(String refer) {
+		if(CheckUtil.isBlank(refer)) {
+			throw new UserException("来源不明确");
+		}
+		refer = refer.length()>21?refer.substring(0,21):refer.substring(0, refer.length());
+		int allowCount = 0;
+		for(String allow:userUrls) {
+			if(allow.contains(refer)) {
+				break;
+			}
+			allowCount += 1;
+		}
+		if(allowCount==userUrls.size()) {
+			throw new UserException("来源错误");
+		}
+	}
 }

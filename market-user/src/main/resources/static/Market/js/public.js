@@ -2,6 +2,7 @@ var sysInfo = '';
 var ipAddrInfo = '';
 var ipAddrBak = '';
 var comInfo = '';
+var basePath = "http://www.Market.com/Market/";
 
 
 window.IPCallBack = function IPCallBack(data) {

@@ -17,7 +17,6 @@ public class MarketApplication {
 	}
 	
 	
-	
 //	@Bean
 //	public ServletRegistrationBean randCodeServletRegistration() {
 //		ServletRegistrationBean registration = new ServletRegistrationBean(new RandCodeServlet());
