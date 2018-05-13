@@ -33,7 +33,7 @@ $(function(){
 	referStr = Base.encode(JSON.stringify(referStr));
 	$.ajax({
 		type:"get",
-		data:{"foot":referStr,"info":info,"sign":sign,"accessTime":time},
+		data:{"foot":referStr,"info":info,"sign":sign,"accessTime":time,"mobileType":1},
 		url:"http://127.0.0.1:26888/user/registPre.do",
 		async:true,
 		success: function(res){
