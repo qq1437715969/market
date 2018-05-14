@@ -10,4 +10,6 @@ public class UserConstant {
 	
 	public final static String IMG_YZM_STR = "imgYzm";
 	
+	
+	public final static String USER_KEY_PRE = "userKey";
 }

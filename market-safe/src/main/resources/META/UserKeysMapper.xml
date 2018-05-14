@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.market.safe.mapper.UserKeysMapper">
+
+	<update id="modifyAllRand" parameterType="java.lang.Integer">
+		update tb_user_keys set random = #{rand}
+	</update>
+	
+	<update id="modifyAllLast" parameterType="java.lang.Integer">
+		update tb_user_keys set last = #{last}
+	</update>
+	
+	<insert id="addNewKeys" parameterType="java.util.List">
+		insert into tb_user_keys (keysId,privateKey,publicKey,random,endTime,operator,last) 
+		<foreach collection="keys" item="key">
+			(#{key.keysId},#{key.privateKey},#{key.publicKey},DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 5 DAY),#{key.random},#{key.operator},#{key.last})
+		</foreach>
+	</insert>
+	
+</mapper>
+        

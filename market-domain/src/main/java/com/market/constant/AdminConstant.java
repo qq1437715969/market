@@ -33,4 +33,6 @@ public class AdminConstant {
 //		CAN_NOT_REMOVE_ADMINIDS.add("subadmin");
 //		CAN_NOT_REMOVE_ADMINIDS.add("adminId");
 	}
+	
+	public final static String ADMIN_KEY_PRE = "adminKey";
 }
