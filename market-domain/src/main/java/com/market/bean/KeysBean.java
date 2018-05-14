@@ -2,8 +2,6 @@ package com.market.bean;
 
 import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 public class KeysBean {
 
 	private String keysId;
