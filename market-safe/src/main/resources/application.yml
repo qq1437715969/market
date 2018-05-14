@@ -2,7 +2,10 @@ spring:
   profiles:
     active:
     - dev
-    
+
+  jackson:
+    time-zone: GMT+8
+        
   #访问资源gzip压缩
 server:
   compression:

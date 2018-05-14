@@ -3,6 +3,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.market.safe.mapper.UserKeysMapper">
 
+	<resultMap type="com.market.bean.KeysBean" id="UserViewMap">
+		<result column="publicKey" property="publicKey" jdbcType="VARCHAR"/>
+		<result column="random" property="random" jdbcType="VARCHAR"/>
+		<result column="endTime" property="endTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
 	<update id="modifyAllRand" parameterType="java.lang.Integer">
 		update tb_user_keys set random = #{rand}
 	</update>
@@ -11,10 +17,15 @@
 		update tb_user_keys set last = #{last}
 	</update>
 	
+	<select id="userViewKeys" parameterType="java.lang.Integer" resultMap="UserViewMap">
+		select publicKey , random , endTime from 
+		tb_user_keys where last = 1 limit #{num}
+	</select>
+	
 	<insert id="addNewKeys" parameterType="java.util.List">
-		insert into tb_user_keys (keysId,privateKey,publicKey,random,endTime,operator,last) 
-		<foreach collection="keys" item="key">
-			(#{key.keysId},#{key.privateKey},#{key.publicKey},DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 5 DAY),#{key.random},#{key.operator},#{key.last})
+		insert into tb_user_keys (keysId,privateKey,publicKey,random,endTime,operator,last) value
+		<foreach collection="keys" item="key" index="index" separator=",">
+			(#{key.keysId},#{key.privateKey},#{key.publicKey},#{key.random},DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 5 DAY),#{key.operator},#{key.last})
 		</foreach>
 	</insert>
 	

@@ -7,9 +7,16 @@ import com.market.domain.CommonRsp;
 
 public interface UserSecretSer {
 	
-	List<KeysBean> createNewKeyPairs(String operator);
+//	List<KeysBean> createNewKeyPairs(String operator);
 	
+	/**
+	 * 操作
+	 * @param list
+	 * @return
+	 */
+//	CommonRsp<List<KeysBean>> updateKeys(List<KeysBean> list);
+
+	CommonRsp<List<KeysBean>> adminUpdateKeys(String admin);
 	
-	CommonRsp<List<KeysBean>> updateKeys(List<KeysBean> list);
-	
+	CommonRsp<List<KeysBean>> userViewKeys();	
 }

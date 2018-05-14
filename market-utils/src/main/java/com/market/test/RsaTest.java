@@ -2,6 +2,7 @@ package com.market.test;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Date;
 
 import org.junit.Test;
 
@@ -27,6 +28,12 @@ public class RsaTest {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@Test
+	public void fun2() {
+		Date date = new Date(1526726345L);
+		System.out.println(date);
 	}
 	
 }

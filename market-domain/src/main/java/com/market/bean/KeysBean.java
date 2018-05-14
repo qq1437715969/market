@@ -2,6 +2,8 @@ package com.market.bean;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class KeysBean {
 
 	private String keysId;
@@ -13,8 +15,8 @@ public class KeysBean {
 	private Date createTime;
 	
 	private Integer random;
-	
-	private String endTime;
+
+	private Date endTime;
 	
 	private String operator;
 	
@@ -60,11 +62,11 @@ public class KeysBean {
 		this.random = random;
 	}
 
-	public String getEndTime() {
+	public Date getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(String endTime) {
+	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
 
@@ -83,5 +85,5 @@ public class KeysBean {
 	public void setLast(Integer last) {
 		this.last = last;
 	}
-	
+
 }
