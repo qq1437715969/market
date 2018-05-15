@@ -19,7 +19,7 @@
 	
 	<select id="userViewKeys" parameterType="java.lang.Integer" resultMap="UserViewMap">
 		select publicKey , random , endTime from 
-		tb_user_keys where last = 1 limit #{num}
+		tb_user_keys where last = 1 order by random limit #{num} 
 	</select>
 	
 	<insert id="addNewKeys" parameterType="java.util.List">

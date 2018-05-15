@@ -11,6 +11,11 @@ public class Base64Util {
 		return new String(Base64.decodeBase64(str));
 	} 
 	
-	
+	public static String encode(String str) {
+		if(CheckUtil.isBlank(str)) {
+			return "";
+		}
+		return new String(Base64.encodeBase64(str.getBytes()));
+	}
 	
 }

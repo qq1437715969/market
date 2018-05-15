@@ -41,7 +41,7 @@ public class UserSafeCon {
 	@Autowired
 	private HttpServletRequest req;
 	
-	@GetMapping("/registPre.do")
+	@GetMapping("/SafeAccessPre.do")
 	@CheckHeaders
 	@GetAccessInfo
 	public void registPre(UserRegistSafeBean safe) throws UnsupportedEncodingException {

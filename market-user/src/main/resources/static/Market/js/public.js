@@ -2,8 +2,26 @@ var sysInfo = '';
 var ipAddrInfo = '';
 var ipAddrBak = '';
 var comInfo = '';
-var basePath = "http://www.Market.com/Market/";
+var safeKeys = 'SafeKeysMap';
 
+var basePath = "http://www.Market.com/Market/";
+myStorage = window.localStorage;
+
+String.prototype.replaceAll  = function(s1,s2){     
+    return this.replace(new RegExp(/s1/,"gm"),s2);     
+}  
+
+function set2myStorage(key,val){
+	myStorage.setItem(key,val);
+}
+
+function setSafeKeys2Storage(val){
+	myStorage.setItem(safeKeys,val);
+}
+
+function getMyStoragr(key){
+	myStorage.get(key);
+}
 
 window.IPCallBack = function IPCallBack(data) {
 	return data;
