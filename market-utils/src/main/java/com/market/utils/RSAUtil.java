@@ -94,7 +94,7 @@ public class RSAUtil {
 
 		KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(KEY_ALGORITHM);
 
-		keyPairGen.initialize(2048);
+		keyPairGen.initialize(1024);
 
 		KeyPair keyPair = keyPairGen.generateKeyPair();
 
