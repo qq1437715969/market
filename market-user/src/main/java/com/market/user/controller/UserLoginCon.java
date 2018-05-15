@@ -1,7 +1,5 @@
 package com.market.user.controller;
 
-import static org.assertj.core.api.Assertions.in;
-
 import java.security.interfaces.RSAPrivateKey;
 
 import org.springframework.beans.factory.annotation.Autowired;
