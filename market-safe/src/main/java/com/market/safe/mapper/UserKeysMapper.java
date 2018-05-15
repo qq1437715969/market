@@ -17,4 +17,6 @@ public interface UserKeysMapper {
 	List<KeysBean> userViewKeys(Integer num);
 	
 	Integer addNewKeys(@Param("keys")List<KeysBean> keys);
+	
+	List<KeysBean> getCyrrKeysInfo(Integer num);
 }

@@ -41,34 +41,39 @@ $(function(){
 			flag = true;
 		}
 	});
-	if(flag){
-		$.ajax({
-			type:"get",
-			data:{"foot":referStr,"info":info,"sign":sign,"accessTime":time,"mobileType":1},
-			url:"http://127.0.0.1:26888/userKeys/userViewKeys.do",
-			async:true,
-			success: function(res){
-				console.log(res);
-				res = res.substring(1,res.length-1);
-				res = Base.decode(res);
-				console.log(res);
-				var keysMap =  new Map();
-				res = JSON.parse(res);
-				console.log(res.code);
-				if(res.code==1){
-					var datas = res.data;
-					for(var i = 0 ;i<datas.length;i++){
-						keysMap.put(datas[i].random,datas[i].publicKey+"."+datas[i].endTime);
-					}
-					setSafeKeys2Storage();
-				}else{
-					console.log("可以退出了");
-				}
-			}
-		});
-	}
+	getKeyMaps(referStr,info,sign,time);
+	
 })
 
+function getKeyMaps(referStr,info,sign,time){
+	var keysMap = getSafeKeys();
+	console.log(keysMap);
+	if(null!=keysMap||undefined!=keysMap){
+		return;
+	}
+	$.ajax({
+		type:"get",
+		data:{"foot":referStr,"info":info,"sign":sign,"accessTime":time,"mobileType":1},
+		url:"http://127.0.0.1:26888/userKeys/userViewKeys.do",
+		async:true,
+		success: function(res){
+			res = res.substring(1,res.length-1);
+			res = Base.decode(res);
+			var keysMap =  new Map();
+			res = JSON.parse(res);
+			if(res.code==1){
+				var datas = res.data;
+//				for(var i = 0 ;i<datas.length;i++){
+//					keysMap.put(datas[i].random,datas[i].publicKey+"."+datas[i].endTime);
+//				}
+				console.log(res.data);
+				setSafeKeys2Storage(Base.encode(JSON.stringify(res.data)));
+			}else{
+				console.log("可以退出了");
+			}
+		}
+	});
+}
 
 
 

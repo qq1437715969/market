@@ -9,6 +9,14 @@
 		<result column="endTime" property="endTime" jdbcType="TIMESTAMP"/>
 	</resultMap>
 
+	<resultMap type="com.market.bean.KeysBean" id="CacheKeysMap">
+		<result column="privateKey" property="privateKey" jdbcType="VARCHAR"/>
+		<result column="publicKey" property="publicKey" jdbcType="VARCHAR"/>
+		<result column="random" property="random" jdbcType="TIMESTAMP"/>
+		<result column="endTime" property="endTime" jdbcType="TIMESTAMP"/>
+		<result column="last" property="last" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
 	<update id="modifyAllRand" parameterType="java.lang.Integer">
 		update tb_user_keys set random = #{rand}
 	</update>
@@ -19,6 +27,11 @@
 	
 	<select id="userViewKeys" parameterType="java.lang.Integer" resultMap="UserViewMap">
 		select publicKey , random , endTime from 
+		tb_user_keys where last = 1 order by random limit #{num} 
+	</select>
+	
+	<select id="getCyrrKeysInfo" parameterType="java.lang.Integer" resultMap="CacheKeysMap">
+		select privateKey , publicKey , random , endTime from 
 		tb_user_keys where last = 1 order by random limit #{num} 
 	</select>
 	

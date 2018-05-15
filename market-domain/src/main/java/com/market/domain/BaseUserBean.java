@@ -20,6 +20,8 @@ public class BaseUserBean {
 	
 	private Long longTime;
 	
+	private String info;
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -82,6 +84,14 @@ public class BaseUserBean {
 
 	public void setLongTime(Long longTime) {
 		this.longTime = longTime;
+	}
+
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
 	}
 
 }

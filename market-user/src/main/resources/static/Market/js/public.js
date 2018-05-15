@@ -2,10 +2,10 @@ var sysInfo = '';
 var ipAddrInfo = '';
 var ipAddrBak = '';
 var comInfo = '';
-var safeKeys = 'SafeKeysMap';
+safeKeys = 'SafeKeysMap';
+myStorage = window.localStorage;
 
 var basePath = "http://www.Market.com/Market/";
-myStorage = window.localStorage;
 
 String.prototype.replaceAll  = function(s1,s2){     
     return this.replace(new RegExp(/s1/,"gm"),s2);     
@@ -20,7 +20,11 @@ function setSafeKeys2Storage(val){
 }
 
 function getMyStoragr(key){
-	myStorage.get(key);
+	return myStorage.getItem(key);
+}
+
+function getSafeKeys(){
+	return myStorage.getItem(safeKeys);
 }
 
 window.IPCallBack = function IPCallBack(data) {
@@ -225,7 +229,7 @@ function uuid(len, radix) {
       uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
       uuid[14] = '4';
  
-      // Fill in random data.  At i==19 set the high bits of clock sequence as
+      // Fill in random data. At i==19 set the high bits of clock sequence as
       // per rfc4122, sec. 4.1.5
       for (i = 0; i < 36; i++) {
         if (!uuid[i]) {
@@ -299,4 +303,5 @@ function getComInfo(){
 		return json;
 	}
 }
+
 	

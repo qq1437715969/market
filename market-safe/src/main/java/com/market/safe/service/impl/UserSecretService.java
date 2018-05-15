@@ -13,6 +13,7 @@ import com.market.constant.UserConstant;
 import com.market.domain.CodeDict;
 import com.market.domain.CommonRsp;
 import com.market.exception.UserException;
+import com.market.safe.config.CacheClient;
 import com.market.safe.mapper.UserKeysMapper;
 import com.market.safe.service.UserSecretSer;
 import com.market.utils.KeysIdUtils;
@@ -21,6 +22,9 @@ import com.market.utils.RSAUtil;
 @Service
 public class UserSecretService implements UserSecretSer {
 
+		@Autowired
+		private CacheClient client;
+	
 		@Autowired
 		private UserKeysMapper userKeysMapper;
 	
@@ -83,6 +87,7 @@ public class UserSecretService implements UserSecretSer {
 			}
 			List<KeysBean> data = userKeysMapper.userViewKeys(KEYS_NUM);
 			resp.setData(data);
+			flushKeys2Cache();
 			return resp;
 		}
 
@@ -98,9 +103,15 @@ public class UserSecretService implements UserSecretSer {
 			resp.setData(keys);
 			return resp;
 		}
-		
-		
-		
+
+		@Override
+		public void flushKeys2Cache() {
+			List<KeysBean> beans = userKeysMapper.getCyrrKeysInfo(KEYS_NUM);
+			for(KeysBean bean:beans) {
+				Integer random = bean.getRandom();
+				client.set(UserConstant.USER_KEY_PRE+random,bean);
+			}
+		}
 		
 		
 }

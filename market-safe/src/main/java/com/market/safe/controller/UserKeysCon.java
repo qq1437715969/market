@@ -48,4 +48,8 @@ public class UserKeysCon {
 		 return "+"+Base64Util.encode(json)+"+";
 	}
 
+	@RequestMapping("/flushKeysMap2Cache.do")
+	public void flushKeys2Cache() {
+		userSecretService.flushKeys2Cache();
+	}
 }

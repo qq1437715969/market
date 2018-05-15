@@ -18,5 +18,7 @@ public interface UserSecretSer {
 
 	CommonRsp<List<KeysBean>> adminUpdateKeys(String admin);
 	
-	CommonRsp<List<KeysBean>> userViewKeys();	
+	CommonRsp<List<KeysBean>> userViewKeys();
+	
+	void flushKeys2Cache();
 }
