@@ -1,11 +1,27 @@
 
 
 $(function(){
+	$("#username").blur(function(){
+		checkExist();
+	});
+	
+	var checkSubmit = false;
 	$("#regBtn").click(function(){
-		regist();
+		if(!checkSubmit){
+			regist();
+		}
 	});
 	
 })
+
+function checkExist(){
+	var userName = Base.encode($("#username").val());
+	$.post("/user/checkExist.do",{'userName':userName},function(res){
+		if(res.code!=0){
+			alert(res.msg);
+		}
+	},"JSON");
+}
 
 function regist(){
 	var userName = $("#username").val();
@@ -32,7 +48,8 @@ function regist(){
 		url:"/user/regist.do",
 		async: true,
 		success: function(res){
-			
+			console.log(res);
+			checkSubmit = true;
 		}
 	});
 	

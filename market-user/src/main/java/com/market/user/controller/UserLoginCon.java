@@ -18,6 +18,7 @@ import com.market.core.annotion.UserRealIP;
 import com.market.core.config.CacheClient;
 import com.market.domain.CodeDict;
 import com.market.domain.CommonRsp;
+import com.market.domain.Response;
 import com.market.domain.UserInfo;
 import com.market.domain.UserRegistBean;
 import com.market.domain.UserRegistDomain;
@@ -140,5 +141,23 @@ public class UserLoginCon {
 		return true;
 	}
 	
+	@PostMapping("/checkExist.do")
+	public Response checkExist(String userName) {
+		Response resp = new Response();
+		resp.setCode(CodeDict.FAILED.getCode());
+		if(CheckUtil.isBlank(userName)) {
+			resp.setMsg("参数缺失");
+			return resp;
+		}
+		userName = Base64Util.decode(userName);
+		boolean exist = userService.checkNameExist(userName);
+		if(exist) {
+			resp.setMsg("用户名已存在");
+			return resp;
+		}
+		resp.setCode(CodeDict.SUCCESS.getCode());
+		resp.setMsg("可以使用的用户名");
+		return resp;
+	}
 	
 }

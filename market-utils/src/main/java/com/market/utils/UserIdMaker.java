@@ -9,17 +9,8 @@ public class UserIdMaker {
 			return null;
 		}
 		int length = userName.length();
-		if(length>13) {
-			userName = userName.substring(12);
-		}
-		if(length>9) {
-			userName = userName.substring(8);
-		}
 		if(length>5) {
-			userName = userName.substring(4);
-		}
-		if(length>3) {
-			userName = userName.substring(2);
+			userName = userName.substring(length-4);
 		}
 		return "user_"+UUID.randomUUID().toString().replaceAll("-","").trim().substring(10)+userName;
 	}
