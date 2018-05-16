@@ -9,18 +9,21 @@ $(function(){
 
 function regist(){
 	var userName = $("#username").val();
-	var pass = $("#password").val();
-	var rePass = $("#rePass").val();
-	checkRegistParams(userName,pass,rePass)
+	var pass = hex_md5_num($("#password").val()+"www.market.com",3);
+	var rePass = hex_md5_num($("#rePass").val()+"www.market.com",3);
+	var data = "{'userName':'"+userName+"','pass':'"+pass+"'}";
+	if(!checkRegistParams(userName,pass,rePass)){
+		return;
+	}
 	var random = Math.ceil(Math.random()*100);
 	var key = getKey(random);
 	var encrypt = new JSEncrypt();
 	encrypt.setPublicKey(key);
-	userName = encrypt.encrypt(userName);
-	pass = encrypt.encrypt(pass);
+	var mydata = encrypt.encrypt(data);
+	console.log(mydata);
 	$.ajax({
 		type:"post",
-		data: {"userName":userName,"pass":pass,"random":random},
+		data: {"info":mydata,"random":random},
 		url:"/user/regist.do",
 		async: true,
 		success: function(res){

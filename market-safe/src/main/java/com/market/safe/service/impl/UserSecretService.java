@@ -17,6 +17,7 @@ import com.market.safe.config.CacheClient;
 import com.market.safe.mapper.UserKeysMapper;
 import com.market.safe.service.UserSecretSer;
 import com.market.utils.KeysIdUtils;
+import com.market.utils.RSASecurityTool;
 import com.market.utils.RSAUtil;
 
 @Service
@@ -41,10 +42,13 @@ public class UserSecretService implements UserSecretSer {
 			 StringBuilder sb = new StringBuilder();
 			 try {
 				for(int i=1;i<=KEYS_NUM;i++) {
-					Map<String, Object> keys = RSAUtil.initKey();
+					Map<String, Object> keys = RSASecurityTool.initKey();
+//					Map<String, Object> keys = RSAUtil.initKey();
 					String keysId = KeysIdUtils.createKeyId(UserConstant.USER_KEY_PRE);
-					String privateKey = RSAUtil.getPrivateKey(keys);
-					String publicKey = RSAUtil.getPublicKey(keys);
+					String privateKey = RSASecurityTool.getPrivateKey(keys);
+					String publicKey = RSASecurityTool.getPublicKey(keys);
+//					String privateKey = RSAUtil.getPrivateKey(keys);
+//					String publicKey = RSAUtil.getPublicKey(keys);
 					KeysBean keysBean = new KeysBean();
 					keysBean.setKeysId(keysId);
 					keysBean.setPrivateKey(privateKey);

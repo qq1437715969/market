@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.market.bean.KeysBean;
 import com.market.bean.UserBean;
 import com.market.constant.UserConstant;
@@ -18,7 +19,10 @@ import com.market.domain.UserRegistBean;
 import com.market.dto.UserLoginDto;
 import com.market.user.service.UserLoginSer;
 import com.market.utils.CheckUtil;
+import com.market.utils.Md5Utils;
+import com.market.utils.RSASecurityTool;
 import com.market.utils.RSAUtil;
+import com.market.utils.SaltUtils;
 
 /**
  * @author LL
@@ -60,11 +64,18 @@ public class UserLoginCon {
 //		rand = (int) Math.ceil(rand%6);
 		KeysBean keysBean = (KeysBean)client.get(UserConstant.USER_KEY_PRE+random);
 		String privateKey = keysBean.getPrivateKey();
-		RSAPrivateKey key = RSAUtil.loadPrivateKey(privateKey);
+		String info = user.getInfo();
+		
 		try {
-			byte[] decrypt = RSAUtil.decrypt(key, user.getUserName().getBytes());
-			String string = new String(decrypt);
-			System.out.println(string);
+			info = RSASecurityTool.decryptByPrivateKey(info, privateKey);
+			System.out.println(info);
+			JSONObject jsonObj = JSON.parseObject(info);
+			String userName = jsonObj.getString("userName");
+			String pass = jsonObj.getString("pass");
+			String salt = SaltUtils.createSalt(userName);
+			pass = Md5Utils.encryptString(pass, salt, random);
+			System.out.println(userName+":"+pass);
+			System.out.println(salt);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
