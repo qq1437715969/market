@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.market.bean.UserAccessInfoBean;
+import com.market.bean.UserBean;
 import com.market.domain.CodeDict;
 import com.market.domain.CommonRsp;
 import com.market.domain.IpInfoDomain;
@@ -33,17 +34,17 @@ public class UserService implements UserSer {
 	private UserRegSysMapper regSysMapper;
 	
 	@Override
-	public CommonRsp<UserInfo> queryById(String userid) {
-		CommonRsp<UserInfo> resp = new CommonRsp<UserInfo>();
-		UserInfo userInfo = userMapper.queryById(userid);
+	public CommonRsp<UserBean> queryById(String userid) {
+		CommonRsp<UserBean> resp = new CommonRsp<UserBean>();
+		UserBean userBean = userMapper.queryById(userid);
 		resp.setCode(CodeDict.FAILED.getCode());
-		if(null==userInfo) {
+		if(null==userBean) {
 			resp.setMsg("查询无果");
 			return resp;
 		}
 		resp.setCode(CodeDict.SUCCESS.getCode());
 		resp.setMsg(CodeDict.SUCCESS.getDesc());
-		resp.setData(userInfo);
+		resp.setData(userBean);
 		return resp;
 	}
 

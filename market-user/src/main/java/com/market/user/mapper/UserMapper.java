@@ -14,7 +14,7 @@ public interface UserMapper {
 
 	UserBean queryByPhone(String phone);
 //	
-	UserInfo queryById(String userid);
+	UserBean queryById(String userid);
 	
 	@Select("select  userId from tb_user where userName = #{userName}")
 	@ResultType(java.lang.String.class)

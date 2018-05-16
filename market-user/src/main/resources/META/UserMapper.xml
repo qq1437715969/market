@@ -3,8 +3,26 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.market.user.mapper.UserMapper">
 	
+	<resultMap type="com.market.bean.UserBean" id="BaseResultMap">
+		<id column="userId" property="userId"/>
+		<result column="phone" property="phone"/>
+		<result column="username" property="userName"/>
+		<result column="password" property="password"/>
+		<result column="salt" property="salt"/>
+		<result column="random" property="random"/>
+		<result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="modifyTime" property="modifyTime" jdbcType="TIMESTAMP"/>
+		<result column="version" property="version"/>
+		<result column="degree" property="degree"/>
+	</resultMap>
+	
+	<select id="queryById" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select userId , phone ,username,password,salt,random,createTime,modifyTime,version,degree
+		from tb_user where userId = #{userId}
+	</select>
+	
 	<select id="checkName" parameterType="java.lang.String" resultType="java.lang.String">
-		select userName from tb_user where username = #{userName}
+		select userId from tb_user where username = #{userName}
 	</select>
 	
 	<insert id="addNewUser" parameterType="com.market.domain.UserRegistDomain">
