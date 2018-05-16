@@ -11,10 +11,10 @@ function regist(){
 	var userName = $("#username").val();
 	var pass = hex_md5_num($("#password").val()+"www.market.com",3);
 	var rePass = hex_md5_num($("#rePass").val()+"www.market.com",3);
-	var data = "{'userName':'"+userName+"','pass':'"+pass+"'}";
 	if(!checkRegistParams(userName,pass,rePass)){
 		return;
 	}
+	var data = "{'userName':'"+userName+"','pass':'"+pass+"'}";
 	var sysInfo = getSysInfo();
 	var random = Math.ceil(Math.random()*100);
 	var key = getKey(random);

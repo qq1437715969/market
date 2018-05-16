@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.market.bean.KeysBean;
 import com.market.bean.UserBean;
 import com.market.constant.CommonConstant;
 import com.market.constant.UserConstant;
+import com.market.core.annotion.RsaInfoDec;
 import com.market.core.annotion.UserRealIP;
 import com.market.core.config.CacheClient;
 import com.market.domain.CodeDict;
@@ -49,15 +51,26 @@ public class UserLoginCon {
 	private UserSer userService;
 	
 	@PostMapping("/login.do")
+	@RsaInfoDec
 	public CommonRsp<UserLoginDto> login(UserBean bean){
-		String phone = bean.getPhone();
-		String password = bean.getPassword();
-		CommonRsp<UserLoginDto> resp = new CommonRsp<UserLoginDto>();
-		resp.setCode(CodeDict.FAILED.getCode());
-		if(CheckUtil.isBlank(phone)||CheckUtil.isBlank(password)) {
-			resp.setMsg("参数校验失败");
-			return resp;
+		String info = bean.getInfo();
+		System.out.println(info);
+		JSONObject json = JSON.parseObject(info);
+		bean.setUserName(json.getString("userName"));
+		bean.setPassword(json.getString("pass"));
+		String loginType = bean.getLoginType();
+		if(CheckUtil.isBlank(loginType)) {
+			return userLoginService.loginByName(bean);
 		}
+		
+//		String phone = bean.getPhone();
+//		String password = bean.getPassword();
+//		CommonRsp<UserLoginDto> resp = new CommonRsp<UserLoginDto>();
+//		resp.setCode(CodeDict.FAILED.getCode());
+//		if(CheckUtil.isBlank(phone)||CheckUtil.isBlank(password)) {
+//			resp.setMsg("参数校验失败");
+//			return resp;
+//		}
 		return userLoginService.login(bean);
 	}
 	

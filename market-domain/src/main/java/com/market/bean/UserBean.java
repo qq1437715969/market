@@ -2,12 +2,10 @@ package com.market.bean;
 
 import java.util.Date;
 
-import com.market.domain.BaseUser;
+import com.market.domain.BaseUserBean;
 
-public class UserBean extends BaseUser {
+public class UserBean extends BaseUserBean {
 
-	private String userId;
-	
 	private String userName;
 	
 	private String phone;
@@ -16,8 +14,6 @@ public class UserBean extends BaseUser {
 
 	private String salt;
 	
-	private String random;
-	
 	private Date createTime;
 	
 	private Date modifyTime;
@@ -25,14 +21,6 @@ public class UserBean extends BaseUser {
 	private Integer version;
 	
 	private Integer degree;
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
 
 	public String getUserName() {
 		return userName;
@@ -66,14 +54,8 @@ public class UserBean extends BaseUser {
 		this.salt = salt;
 	}
 
-	public String getRandom() {
-		return random;
-	}
-
-	public void setRandom(String random) {
-		this.random = random;
-	}
-
+	
+	
 	public Date getCreateTime() {
 		return createTime;
 	}

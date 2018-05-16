@@ -10,6 +10,8 @@ public class BaseUserBean {
 	
 	private String pass;
 	
+	private String loginType;
+	
 	private String appid;
 	
 	private String ipAddr;
@@ -28,6 +30,8 @@ public class BaseUserBean {
 	
 	private String sign;
 	
+	private Integer random;
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -38,6 +42,14 @@ public class BaseUserBean {
 
 	public String getPassword() {
 		return password;
+	}
+	
+	public String getLoginType() {
+		return loginType;
+	}
+
+	public void setLoginType(String loginType) {
+		this.loginType = loginType;
 	}
 
 	public void setPassword(String password) {
@@ -122,5 +134,13 @@ public class BaseUserBean {
 
 	public void setSign(String sign) {
 		this.sign = sign;
+	}
+
+	public Integer getRandom() {
+		return random;
+	}
+
+	public void setRandom(Integer random) {
+		this.random = random;
 	}
 }

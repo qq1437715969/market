@@ -8,8 +8,6 @@ public class UserRegistBean extends BaseUserBean {
 	
 	private Integer imgYzmPur;
 	
-	private Integer random;
-	
 	public String getUserName() {
 		return userName;
 	}
@@ -34,12 +32,4 @@ public class UserRegistBean extends BaseUserBean {
 		this.imgYzmPur = imgYzmPur;
 	}
 
-	public Integer getRandom() {
-		return random;
-	}
-
-	public void setRandom(Integer random) {
-		this.random = random;
-	}
-	
 }
