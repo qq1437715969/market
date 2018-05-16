@@ -1,22 +1,45 @@
 package com.market.bean;
 
-import com.market.domain.BaseUser;
+import java.util.Date;
 
+import com.market.domain.BaseUser;
 
 public class UserBean extends BaseUser {
 
-	private String username;
+	private String userId;
+	
+	private String userName;
 	
 	private String phone;
 	
 	private String password;
 
-	public String getUsername() {
-		return username;
+	private String salt;
+	
+	private String random;
+	
+	private Date createTime;
+	
+	private Date modifyTime;
+	
+	private Integer version;
+	
+	private Integer degree;
+
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getPhone() {
@@ -35,5 +58,52 @@ public class UserBean extends BaseUser {
 		this.password = password;
 	}
 
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+
+	public String getRandom() {
+		return random;
+	}
+
+	public void setRandom(String random) {
+		this.random = random;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getModifyTime() {
+		return modifyTime;
+	}
+
+	public void setModifyTime(Date modifyTime) {
+		this.modifyTime = modifyTime;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	public Integer getDegree() {
+		return degree;
+	}
+
+	public void setDegree(Integer degree) {
+		this.degree = degree;
+	}
 	
 }

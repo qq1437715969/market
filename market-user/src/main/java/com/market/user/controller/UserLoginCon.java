@@ -7,21 +7,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
 import com.market.bean.KeysBean;
 import com.market.bean.UserBean;
 import com.market.constant.CommonConstant;
 import com.market.constant.UserConstant;
+import com.market.core.annotion.UserRealIP;
 import com.market.core.config.CacheClient;
 import com.market.domain.CodeDict;
 import com.market.domain.CommonRsp;
+import com.market.domain.UserInfo;
 import com.market.domain.UserRegistBean;
+import com.market.domain.UserRegistDomain;
 import com.market.dto.UserLoginDto;
 import com.market.exception.UserException;
 import com.market.user.service.UserLoginSer;
+import com.market.user.service.UserSer;
 import com.market.utils.Base64Util;
 import com.market.utils.CheckUtil;
 import com.market.utils.Md5Utils;
+import com.market.utils.MyJsonUtil;
 import com.market.utils.RSASecurityTool;
+import com.market.utils.SaltUtils;
+import com.market.utils.UserIdMaker;
 
 /**
  * @author LL
@@ -37,6 +45,9 @@ public class UserLoginCon {
 	@Autowired
 	private UserLoginSer userLoginService;
 	
+	@Autowired
+	private UserSer userService;
+	
 	@PostMapping("/login.do")
 	public CommonRsp<UserLoginDto> login(UserBean bean){
 		String phone = bean.getPhone();
@@ -51,13 +62,13 @@ public class UserLoginCon {
 	}
 	
 	@PostMapping("/regist.do")
+	@UserRealIP
 	public CommonRsp<UserLoginDto> regist(UserRegistBean user){
 		CommonRsp<UserLoginDto> resp = new CommonRsp<UserLoginDto>();
 		resp.setCode(CodeDict.FAILED.getCode());
 		String imgYzm = user.getImgYzm();
 		if(CheckUtil.isBlank(imgYzm)) {
 			resp.setMsg("验证码为空");
-			
 			return resp;
 		}
 		if(!checkRegistParams(user)) {
@@ -65,39 +76,17 @@ public class UserLoginCon {
 			return resp;
 		}
 		try {
-			parseRegistInfo(user);
+			UserRegistDomain register = parseRegistInfo(user);
+			userService.createUser(register,user);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new UserException("解析注册参数异常,请校验您的参数");
 		}
-		
-//		System.out.println(JSON.toJSONString(user));
-//		Integer random = user.getRandom();
-//		if(null==random) {
-//			return null;
-//		}
-//		random = random%6;
-//		KeysBean keysBean = (KeysBean)client.get(UserConstant.USER_KEY_PRE+random);
-//		String privateKey = keysBean.getPrivateKey();
-//		String info = user.getInfo();
-//		System.out.println(info);
-		
-//		try {
-//			info = RSASecurityTool.decryptByPrivateKey(info, privateKey);
-//			System.out.println(info);
-//			JSONObject jsonObj = JSON.parseObject(info);
-//			String userName = jsonObj.getString("userName");
-//			String pass = jsonObj.getString("pass");
-//			String salt = SaltUtils.createSalt(userName);
-//			pass = Md5Utils.encryptString(pass, salt, random);
-//			System.out.println(userName+":"+pass);
-//			System.out.println(salt);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
 		return null;
 	}
 
-	private void parseRegistInfo(UserRegistBean user) throws Exception {
+
+	private UserRegistDomain parseRegistInfo(UserRegistBean user) throws Exception {
 		String info = user.getInfo();
 		String[] infoArr = info.split("\\"+CommonConstant.DOT_STR);
 		String jsonStr = infoArr[0];
@@ -105,7 +94,9 @@ public class UserLoginCon {
 		KeysBean keysBean = (KeysBean)client.get(UserConstant.USER_KEY_PRE+(random));
 		String privateKey = keysBean.getPrivateKey();
 		info = RSASecurityTool.decryptByPrivateKey(jsonStr, privateKey);
-		
+		UserRegistDomain domain = MyJsonUtil.parseObject(info,UserRegistDomain.class, null);
+		domain.setRandom(user.getRandom());
+		return domain;
 	}
 
 	private boolean checkRegistParams(UserRegistBean user) {

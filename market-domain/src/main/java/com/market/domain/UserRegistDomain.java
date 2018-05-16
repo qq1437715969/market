@@ -4,6 +4,8 @@ public class UserRegistDomain {
 	
 	private String userId;
 	
+	private String phone;
+	
 	private String userName;
 	
 	private String pass;
@@ -20,6 +22,14 @@ public class UserRegistDomain {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+	
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public String getUserName() {

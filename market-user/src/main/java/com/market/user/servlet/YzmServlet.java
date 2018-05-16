@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.market.constant.UserConstant;
-import com.market.core.annotion.RealIP;
 import com.market.core.config.CacheClient;
 import com.market.core.constant.TimeConstant;
 import com.market.exception.UserException;
@@ -54,7 +53,6 @@ public class YzmServlet extends HttpServlet {
 		processRequest(req,resp);
 	}
 
-	@RealIP
 	private void processRequest(HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			String ipAddr = IPUtils.getIpAddr(req);

@@ -15,6 +15,7 @@ function regist(){
 	if(!checkRegistParams(userName,pass,rePass)){
 		return;
 	}
+	var sysInfo = getSysInfo();
 	var random = Math.ceil(Math.random()*100);
 	var key = getKey(random);
 	var encrypt = new JSEncrypt();
@@ -23,9 +24,11 @@ function regist(){
 	var salt = uuid(8,16);
 	var sign = hex_md5_num(mydata+salt,random%6);
 	mydata = mydata+"."+salt;
+	var ipInfo = Base.encode(JSON.stringify(ipAddrInfo));
+	sysInfo = Base.encode(JSON.stringify(sysInfo));
 	$.ajax({
 		type:"post",
-		data: {"info":mydata,"sign":sign,"imgYzm":'123456'},
+		data: {"info":mydata,"sign":sign,"imgYzm":'123456',"ipInfo":ipInfo,"sysInfo":sysInfo},
 		url:"/user/regist.do",
 		async: true,
 		success: function(res){

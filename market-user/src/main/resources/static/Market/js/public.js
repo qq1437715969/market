@@ -206,13 +206,6 @@ function createAccessSalt(){
 }
 
 
-function getSysBroInfo(){
-	var sysInfo = navigator.userAgent;
-	if(null!=sysInfo){
-		
-	}
-}
-
 function uuid(len, radix) {
     var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
     var uuid = [], i;

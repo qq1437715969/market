@@ -14,6 +14,10 @@ public class BaseUserBean {
 	
 	private String ipAddr;
 	
+	private String ipInfo;
+	
+	private String sysInfo;
+	
 	private String accessToken;
 	
 	private Date loginTime;
@@ -62,6 +66,22 @@ public class BaseUserBean {
 
 	public void setIpAddr(String ipAddr) {
 		this.ipAddr = ipAddr;
+	}
+
+	public String getIpInfo() {
+		return ipInfo;
+	}
+
+	public void setIpInfo(String ipInfo) {
+		this.ipInfo = ipInfo;
+	}
+
+	public String getSysInfo() {
+		return sysInfo;
+	}
+
+	public void setSysInfo(String sysInfo) {
+		this.sysInfo = sysInfo;
 	}
 
 	public String getAccessToken() {

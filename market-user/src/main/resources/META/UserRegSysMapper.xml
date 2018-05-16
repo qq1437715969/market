@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.market.user.mapper.UserRegSysMapper">
+	
+	<insert id="addNew" parameterType="com.market.bean.UserAccessInfoBean">
+		insert into tb_user_reg_sysInfo
+		(userId,browser,os,reqip,cip,cid,cname)
+		values
+		(#{info.userId},#{info.browser},#{info.os},#{info.reqIp},#{info.cip},#{info.cid},#{info.cname})  
+	</insert>
+
+</mapper>

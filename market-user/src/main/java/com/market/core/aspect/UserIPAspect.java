@@ -2,6 +2,7 @@ package com.market.core.aspect;
 
 import com.market.core.config.CacheClient;
 import com.market.domain.BaseAdminBean;
+import com.market.domain.BaseUserBean;
 import com.market.utils.IPUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,19 +25,19 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 @Aspect
 @Order(value = 1)
-public class IPAspect {
+public class UserIPAspect {
 
 	@Autowired
 	private CacheClient client;
 	
     // 配置前置通知
-    @Before("@annotation(com.market.core.annotion.RealIP) && args(admin)")
-    public void before(JoinPoint joinPoint, BaseAdminBean admin) {
+    @Before("@annotation(com.market.core.annotion.UserRealIP) && args(user)")
+    public void before(JoinPoint joinPoint, BaseUserBean user) {
         // 接收到请求，记录请求内容
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         String ip = IPUtils.getIpAddr(request);
-        admin.setIpAddr(ip);
+        user.setIpAddr(ip);
     }
     
 //    @Before("@annotation(com.market.core.annotion.RealIP) && args(req,resp)")

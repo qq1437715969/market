@@ -1,5 +1,14 @@
 package com.market.user.servlet;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
 import javax.imageio.ImageIO;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -10,23 +19,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.market.constant.UserConstant;
-import com.market.core.annotion.RealIP;
 import com.market.core.config.CacheClient;
 import com.market.core.constant.TimeConstant;
 import com.market.exception.UserException;
 import com.market.utils.CheckUtil;
 import com.market.utils.IPUtils;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
 
 @WebServlet(urlPatterns="/user/imgYzm1.yzm")
 public class RandCodeServlet extends HttpServlet {
@@ -42,7 +42,6 @@ public class RandCodeServlet extends HttpServlet {
 		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 	
-	@RealIP
 	private void processRequest(HttpServletRequest req,
 			HttpServletResponse resp)
 			throws ServletException, IOException {
