@@ -9,6 +9,7 @@ import com.market.dto.UserLoginDto;
 import com.market.user.mapper.UserMapper;
 import com.market.user.service.UserLoginSer;
 import com.market.utils.CheckUtil;
+import com.market.utils.Md5Utils;
 
 @Service
 public class UserLoginService implements UserLoginSer {
@@ -54,6 +55,49 @@ public class UserLoginService implements UserLoginSer {
 		resp.setMsg("用户名或密码错误");
 		return resp;
 	}
-	
+
+	@Override
+	public CommonRsp loginByName(UserBean bean) {
+		CommonRsp resp = new CommonRsp<>();
+		resp.setCode(CodeDict.FAILED.getCode());
+		String userName = bean.getUserName();
+		UserBean dbBean = userMapper.queryByName(userName);
+		if(null==dbBean) {
+			resp.setMsg("当前用户不存在,请先注册");
+			return resp;
+		}
+		String salt = dbBean.getSalt();
+		Integer random = dbBean.getRandom();
+		String password = bean.getPassword();
+		String pwd = Md5Utils.encryptString(password, salt, random);
+		if(!pwd.equals(dbBean.getPassword())) {
+			resp.setMsg("用户名或密码错误");
+			return resp;
+		}
+		resp.setCode(CodeDict.SUCCESS.getCode());
+		resp.setMsg("登陆成功");
+		return resp;
+	}
+
+	@Override
+	public CommonRsp loginByPhone(UserBean bean) {
+		CommonRsp resp = new CommonRsp<>();
+		resp.setCode(CodeDict.FAILED.getCode());
+		String phone = bean.getPhone();
+		UserBean dbBean = userMapper.queryByPhone(phone);
+		if(null==dbBean) {
+			resp.setMsg("当前用户不存在,请先注册");
+			return resp;
+		}
+		String salt = dbBean.getSalt();
+		Integer random = dbBean.getRandom();
+		String password = bean.getPassword();
+		String pwd = Md5Utils.encryptString(password, salt, random);
+		if(!pwd.equals(dbBean.getPassword())) {
+			resp.setMsg("用户名或密码错误");
+			return resp;
+		}
+		return null;
+	}
 	
 }

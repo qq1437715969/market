@@ -8,4 +8,8 @@ public interface UserLoginSer {
 
 	CommonRsp<UserLoginDto> login(UserBean bean);
 	
+	CommonRsp loginByName(UserBean bean);
+	
+	CommonRsp loginByPhone(UserBean bean);
+	
 }

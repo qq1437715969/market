@@ -21,6 +21,12 @@
 		from tb_user where userId = #{userId}
 	</select>
 	
+	<select id="queryByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select userId , phone ,username,password,salt,random,createTime,modifyTime,version,degree
+		from tb_user where username = #{userName}
+	</select>
+	
+	
 	<select id="checkName" parameterType="java.lang.String" resultType="java.lang.String">
 		select userId from tb_user where username = #{userName}
 	</select>
