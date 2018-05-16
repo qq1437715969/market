@@ -12,4 +12,6 @@ public class UserConstant {
 	
 	
 	public final static String USER_KEY_PRE = "userKey";
+	
+	public final static Integer USER_REGIST_INFO_DOT_NUM = 3;
 }

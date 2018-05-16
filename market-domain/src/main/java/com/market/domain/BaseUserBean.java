@@ -22,6 +22,8 @@ public class BaseUserBean {
 	
 	private String info;
 	
+	private String sign;
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -94,4 +96,11 @@ public class BaseUserBean {
 		this.info = info;
 	}
 
+	public String getSign() {
+		return sign;
+	}
+
+	public void setSign(String sign) {
+		this.sign = sign;
+	}
 }

@@ -19,11 +19,13 @@ function regist(){
 	var key = getKey(random);
 	var encrypt = new JSEncrypt();
 	encrypt.setPublicKey(key);
-	var mydata = encrypt.encrypt(data);
-	console.log(mydata);
+	var mydata = encrypt.encrypt(data)+"."+Base.encode(random);
+	var salt = uuid(8,16);
+	var sign = hex_md5_num(mydata+salt,random%6);
+	mydata = mydata+"."+salt;
 	$.ajax({
 		type:"post",
-		data: {"info":mydata,"random":random},
+		data: {"info":mydata,"sign":sign,"imgYzm":'123456'},
 		url:"/user/regist.do",
 		async: true,
 		success: function(res){
