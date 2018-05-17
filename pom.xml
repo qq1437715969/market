@@ -12,6 +12,7 @@
   	<module>market-user</module>
   	<module>market-admin</module>
   	<module>market-safe</module>
+  	<module>market-file</module>
   </modules>
   <description>market parent</description>
 	<properties>
