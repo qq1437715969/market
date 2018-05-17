@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.market.constant.FileConstant;
 import com.market.core.config.CacheClient;
 import com.market.domain.BaseFileDomain;
 import com.market.domain.CodeDict;
@@ -72,25 +73,31 @@ public class UserFileCon {
 			resp.setMsg("暂无该图片相关信息");
 			return resp;
 		}
+		resp.setCode(CodeDict.SUCCESS.getCode());
+		if(domain.getState()==FileConstant.UPLOAD_FILE_SUCCESS_STATE) {
+			resp.setMsg("上传完成");
+			return resp;
+		}
 		Long size = domain.getSize();
 		String filePathName = domain.getFilePathName();
 		File file = new File(filePathName);
 		if(file.exists()) {
 			long total = file.getTotalSpace();
 			if(total<size) {
-				resp.setCode(CodeDict.SUCCESS.getCode());
 				resp.setData("上传中");
 				float percent = total/size;
 				resp.setData(percent+"%");
 				return resp;
 			}else {
-				resp.setCode(CodeDict.SUCCESS.getCode());
+				domain.setState(FileConstant.UPLOAD_FILE_SUCCESS_STATE);
 				resp.setMsg("上传完成");
+				client.set("USER_IMG_"+random, domain);
 				return resp;
 			}
+		}else {
+			resp.setData("上传中,请耐心等待");
+			return resp;
 		}
-		resp.setMsg("暂无该图片相关信息");
-		return resp;
 	}
 	
 	
