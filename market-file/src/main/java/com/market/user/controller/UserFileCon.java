@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.market.constant.FileConstant;
 import com.market.core.config.CacheClient;
+import com.market.core.constant.TimeConstant;
 import com.market.domain.BaseFileDomain;
 import com.market.domain.CodeDict;
 import com.market.domain.CommonRsp;
@@ -91,7 +93,7 @@ public class UserFileCon {
 			}else {
 				domain.setState(FileConstant.UPLOAD_FILE_SUCCESS_STATE);
 				resp.setMsg("上传完成");
-				client.set("USER_IMG_"+random, domain);
+				client.set("USER_IMG_"+random, domain,TimeConstant.MINUTE_5);
 				return resp;
 			}
 		}else {
