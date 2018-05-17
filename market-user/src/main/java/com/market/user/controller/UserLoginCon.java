@@ -53,15 +53,23 @@ public class UserLoginCon {
 	
 	@PostMapping("/login.do")
 	@RsaInfoDec
-	public CommonRsp<UserLoginDto> login(UserBean bean){
-		String info = bean.getInfo();
+	public CommonRsp<UserLoginDto> login(UserBean user){
+		String info = user.getInfo();
+		KeysBean keysBean = (KeysBean)client.get(UserConstant.USER_KEY_PRE+(user.getRandom()));
+		String privateKey = keysBean.getPrivateKey();
+		try {
+			info = RSASecurityTool.decryptByPrivateKey(info, privateKey);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		System.out.println(info);
+		user.setInfo(info);
 		JSONObject json = JSON.parseObject(info);
-		bean.setUserName(json.getString("userName"));
-		bean.setPassword(json.getString("pass"));
-		String loginType = bean.getLoginType();
+		user.setUserName(json.getString("userName"));
+		user.setPassword(json.getString("pass"));
+		String loginType = user.getLoginType();
 		if(CheckUtil.isBlank(loginType)) {
-			return userLoginService.loginByName(bean);
+			return userLoginService.loginByName(user);
 		}
 		
 //		String phone = bean.getPhone();
@@ -72,7 +80,7 @@ public class UserLoginCon {
 //			resp.setMsg("参数校验失败");
 //			return resp;
 //		}
-		return userLoginService.login(bean);
+		return userLoginService.login(user);
 	}
 	
 	@PostMapping("/regist.do")

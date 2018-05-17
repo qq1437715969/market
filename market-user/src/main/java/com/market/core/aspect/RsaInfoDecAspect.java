@@ -25,8 +25,6 @@ import com.market.utils.RSASecurityTool;
 @Order(value =1)
 public class RsaInfoDecAspect {
 	
-	@Autowired
-	private CacheClient client;
 	
 	@Before("@annotation(com.market.core.annotion.RsaInfoDec) && args(user)")
 	public void before(JoinPoint joinPoint, BaseUserBean user) {
@@ -55,13 +53,6 @@ public class RsaInfoDecAspect {
 		}
 		user.setRandom(nums);
 		String jsonStr = infoArr[0];
-		try {
-			KeysBean keysBean = (KeysBean)client.get(UserConstant.USER_KEY_PRE+(nums));
-			String privateKey = keysBean.getPrivateKey();
-			info = RSASecurityTool.decryptByPrivateKey(jsonStr, privateKey);
-			user.setInfo(info);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		user.setInfo(jsonStr);
 	}
 }
