@@ -7,27 +7,34 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.alibaba.fastjson.JSON;
 import com.market.constant.FileConstant;
 import com.market.core.config.CacheClient;
 import com.market.core.constant.TimeConstant;
 import com.market.domain.BaseFileDomain;
 import com.market.domain.CodeDict;
 import com.market.domain.CommonRsp;
+import com.market.domain.MultiUserFileDomain;
 import com.market.domain.UserFileDomain;
 import com.market.user.config.FilePathConfig;
 import com.market.user.service.UserImgSer;
 import com.market.user.thread.UserHeadImgThread;
+import com.market.user.thread.UserMultiFileThread;
 import com.market.utils.CheckUtil;
 
 @RestController
 @RequestMapping("/userFile")
 public class UserFileCon {
+	
+	private Logger log = LoggerFactory.getLogger(UserFileCon.class);
 	
 	private  ExecutorService executors = Executors.newSingleThreadExecutor();
 	
@@ -59,6 +66,13 @@ public class UserFileCon {
 		String random = UUID.randomUUID().toString().replaceAll("-","").trim();
 		client.set("USER_IMG_"+random.substring(8),ufd);
 		return resp;
+	}
+	
+	@PostMapping("/upLoadMultiFiles.do")
+	public CommonRsp<String> upLoadHeadImg(MultiUserFileDomain domain,String lastModifiedDate,String name){
+		userImgService.upLoadMultiParts(domain, "/data/market/file/temp/", name);
+//		userImgService.write2Temp(domain,"/data/market/file/temp/", name);
+		return null;
 	}
 	
 	

@@ -13,35 +13,46 @@
 			<!--用来存放item-->
 			<div id="fileList" class="uploader-list"></div>
 			<div id="filePicker">选择图片</div>
+			<button id="upBtn">上传</button>
 		</div>
 	</body>
 		<script type="text/javascript">
+		
 		window.onload = function(){
+		var GUID = WebUploader.Base.guid();
 		var $list = $("#fileList");	
 		var thumbnailWidth = 100;
 		var thumbnailHeight = 100;
 		var uploader = WebUploader.create({
     // 选完文件后，是否自动上传。
-    auto: true,
+    auto: false,
 
     // swf文件路径
     swf: '/public/Uploader.swf',
 
     // 文件接收服务端。
-    server: '/userFile/upLoadHeadImg.do',
+    server: '/userFile/upLoadMultiFiles.do',
 
     // 选择文件的按钮。可选。
     // 内部根据当前运行是创建，可能是input元素，也可能是flash.
     pick: '#filePicker',
+	
+    chunked: true,//开始分片上传
+    chunkSize: 102400,//每一片的大小
 
+    
     // 只允许选择图片文件。
-    accept: {
+/*     accept: {
         title: 'Images',
         extensions: 'gif,jpg,jpeg,bmp,png',
         mimeTypes: 'image/*'
-    }
+    } */
 	
 	
+	});
+		
+	$("#upBtn").click(function(){
+		uploader.upload();
 	});
 	
 	uploader.on( 'fileQueued', function( file ) {
