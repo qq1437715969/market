@@ -70,7 +70,7 @@ public class UserImgService implements UserImgSer {
 		Long size = domain.getSize();
 		String chunks = domain.getChunks();
 		String[] nameArr = fileName.split("\\.");
-		File path = new File(filePath+"/"+nameArr+"/");
+		File path = new File(filePath+"/"+nameArr[0]+"/");
 		if(!path.exists()) {
 			write2Temp(domain, filePath, fileName);
 		}
