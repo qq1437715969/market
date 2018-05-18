@@ -2,11 +2,16 @@ package com.market.user.controller;
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,12 +75,77 @@ public class UserFileCon {
 	
 	@PostMapping("/upLoadMultiFiles.do")
 	public CommonRsp<String> upLoadHeadImg(MultiUserFileDomain domain,String lastModifiedDate,String name){
-		userImgService.upLoadMultiParts(domain, "/data/market/file/temp/", name);
+//		userImgService.upLoadMultiParts(domain, "/data/market/file/temp/", name);
 //		userImgService.write2Temp(domain,"/data/market/file/temp/", name);
+		String chunks = domain.getChunks();
+		String chunk = domain.getChunk();
+		if(CheckUtil.isBlank(chunks)||CheckUtil.isBlank(chunk)) {
+			return null;
+		}
+		String path = "/data/market/file/temp/";
+		append(domain,path,name);
 		return null;
 	}
 	
 	
+	private void append(MultiUserFileDomain domain, String pathStr, String name) {
+		String chunk = domain.getChunk();
+		String chunks = domain.getChunks();
+		InputStream in = null;
+		byte[] bytes = new byte[1024];
+		String[] nameArr = name.split("\\.");
+		String fileName = pathStr+nameArr[0]+".temp";
+		File file = new File(fileName);
+		if(chunk.equals("0")) {
+			File path = new File(pathStr);
+			if(!path.exists()) {
+				path.mkdirs();
+			}
+			FileOutputStream fos = null;
+			try {
+				in = domain.getFile().getInputStream();
+				int len = 0;
+				fos = new FileOutputStream(file, true);
+				while((len=in.read(bytes))!=-1) {
+					fos.write(bytes, 0, len);
+				}
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					fos.flush();
+					fos.close();
+					if(null!=in) {
+						in.close();
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}else {
+			FileOutputStream fos = null;
+			try {
+				fos = new FileOutputStream(file, true);
+				in = domain.getFile().getInputStream();
+				int len = 0;
+				while((len=in.read(bytes))!=-1) {
+					fos.write(bytes, 0, len);
+				}
+				fos.flush();
+				fos.close();
+				if((Integer.parseInt(chunk)+1)==(Integer.parseInt(chunks))) {
+					File lastFile = new File(pathStr+name);
+					FileUtils.copyFile(file, lastFile);
+				}
+				file.delete();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	@RequestMapping("/checkUpload.do")
 	public CommonRsp<String> checkImgUpLoad(String random){
 		CommonRsp<String> resp = new CommonRsp<String>();
