@@ -138,8 +138,8 @@ public class UserFileCon {
 				if((Integer.parseInt(chunk)+1)==(Integer.parseInt(chunks))) {
 					File lastFile = new File(pathStr+name);
 					FileUtils.copyFile(file, lastFile);
+					file.delete();
 				}
-				file.delete();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
