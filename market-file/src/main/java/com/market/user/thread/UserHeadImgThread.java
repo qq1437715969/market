@@ -3,7 +3,10 @@ package com.market.user.thread;
 import org.springframework.web.multipart.MultipartFile;
 import com.market.user.service.UserImgSer;
 
-
+/**
+ * 单文件线程池上传
+ * @author wolfPc
+ */
 public class UserHeadImgThread implements Runnable {
 
 	private UserImgSer fileService;
